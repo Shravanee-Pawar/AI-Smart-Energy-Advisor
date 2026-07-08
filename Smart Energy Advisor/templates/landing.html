@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}Smart Energy Advisor - Home{% endblock %}
+
+{% block public_content %}
+<!-- Hero Section -->
+<section class="relative bg-white py-24 px-6 overflow-hidden border-b border-slate-100 flex flex-col items-center justify-center text-center">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(16,185,129,0.08),rgba(255,255,255,0))]"></div>
+    
+    <div class="relative max-w-4xl mx-auto flex flex-col items-center">
+        <span class="bg-emerald-500/10 text-emerald-600 font-semibold text-xs tracking-wider uppercase px-4 py-1.5 rounded-full mb-6 flex items-center gap-2">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Next-Gen Energy Conservation
+        </span>
+        
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 tracking-tight leading-none mb-6">
+            Smart Energy Advisor
+        </h1>
+        <p class="text-3xl sm:text-4xl md:text-5xl font-bold text-emerald-600 mb-8 leading-tight max-w-2xl">
+            AI-Powered Electricity Forecasting with Generative Saving Guides
+        </p>
+        <p class="text-lg text-slate-500 mb-10 max-w-2xl">
+            Track appliance metrics, predict electricity consumption using machine learning models, and receive personalized, prioritized energy-saving action plans backed by Gemini AI.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 items-center justify-center">
+            <a href="{{ url_for('auth.register') }}" class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-4 rounded-2xl transition-all shadow-lg shadow-emerald-500/25 text-base flex items-center gap-2 transform hover:-translate-y-1">
+                Start Saving Energy <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a href="{{ url_for('auth.login') }}" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-semibold px-8 py-4 rounded-2xl transition-all text-base flex items-center gap-2 transform hover:-translate-y-1">
+                Access Dashboard <i class="fa-solid fa-table-columns"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Grid Section -->
+<section class="bg-slate-50 py-20 px-6 border-b border-slate-100">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+            <h2 class="text-xs font-semibold text-emerald-600 tracking-widest uppercase mb-3">Core Modules</h2>
+            <p class="text-3xl font-extrabold text-slate-900 tracking-tight">Supercharged Home Conservation Tools</p>
+            <p class="text-slate-500 mt-4">Discover the state-of-the-art features built to lower your bills and minimize environmental footprint.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col group">
+                <div class="bg-emerald-500/10 text-emerald-500 w-12 h-12 rounded-2xl flex items-center justify-center text-lg mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-chart-bar"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 mb-3">Electricity Logging</h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-6">Input current units, check hourly appliance profiles (ACs, coolers, washers), and store logs inside a secure local database.</p>
+            </div>
+            <!-- Feature 2 -->
+            <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col group">
+                <div class="bg-emerald-500/10 text-emerald-500 w-12 h-12 rounded-2xl flex items-center justify-center text-lg mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 mb-3">ML Forecasting</h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-6">Run predictive forecasts using our Scikit-learn Random Forest model. Predict next month's consumption based on actual habits.</p>
+            </div>
+            <!-- Feature 3 -->
+            <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col group">
+                <div class="bg-emerald-500/10 text-emerald-500 w-12 h-12 rounded-2xl flex items-center justify-center text-lg mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-comments"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 mb-3">Generative AI Recommendations</h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-6">Get personalized conservation plans and chat directly with "Smarty", our interactive Gemini AI Energy Advisor.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits/Impact Section -->
+<section class="bg-white py-20 px-6 border-b border-slate-100">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
+        <div class="flex-1">
+            <h2 class="text-xs font-semibold text-emerald-600 tracking-widest uppercase mb-3">Your Impact</h2>
+            <p class="text-3xl font-extrabold text-slate-900 tracking-tight mb-6">Why Monitor Energy Consumption?</p>
+            <div class="space-y-6">
+                <!-- Benefit 1 -->
+                <div class="flex gap-4">
+                    <div class="text-emerald-500 text-lg mt-1"><i class="fa-solid fa-circle-check"></i></div>
+                    <div>
+                        <h4 class="font-bold text-slate-800">Slash Monthly Utility Bills</h4>
+                        <p class="text-slate-500 text-sm mt-1">Identifying high-draw devices allows households to eliminate wastage and save up to 30% in utility bills.</p>
+                    </div>
+                </div>
+                <!-- Benefit 2 -->
+                <div class="flex gap-4">
+                    <div class="text-emerald-500 text-lg mt-1"><i class="fa-solid fa-circle-check"></i></div>
+                    <div>
+                        <h4 class="font-bold text-slate-800">Carbon Offsets</h4>
+                        <p class="text-slate-500 text-sm mt-1">Every kWh conserved prevents approximately 0.85 lbs of CO2 from entering our atmosphere.</p>
+                    </div>
+                </div>
+                <!-- Benefit 3 -->
+                <div class="flex gap-4">
+                    <div class="text-emerald-500 text-lg mt-1"><i class="fa-solid fa-circle-check"></i></div>
+                    <div>
+                        <h4 class="font-bold text-slate-800">Extend Appliance Lifespans</h4>
+                        <p class="text-slate-500 text-sm mt-1">Smart scheduling prevents heavy devices (like AC compressors) from excessive wear and tear.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex-1 w-full bg-emerald-50 p-8 md:p-12 rounded-3xl border border-emerald-100">
+            <h3 class="font-extrabold text-slate-900 text-2xl mb-4">Interactive Analytics Dashboard</h3>
+            <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                Gain access to beautifully animated charts showcasing monthly consumption trends, cost structures, and appliance-level pie allocations. Empower your household with clear, easy-to-read analytics.
+            </p>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center h-48">
+                <!-- Graphic mock -->
+                <div class="flex items-end gap-3 h-32 w-full justify-around px-4">
+                    <div class="w-8 bg-slate-200 rounded-t-lg h-12"></div>
+                    <div class="w-8 bg-slate-200 rounded-t-lg h-20"></div>
+                    <div class="w-8 bg-slate-200 rounded-t-lg h-16"></div>
+                    <div class="w-8 bg-emerald-500 rounded-t-lg h-28 animate-pulse"></div>
+                    <div class="w-8 bg-emerald-600 rounded-t-lg h-24"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SDG 7 Section -->
+<section class="bg-emerald-900 text-emerald-100 py-20 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+        <div class="bg-emerald-500 text-white w-16 h-16 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-8 shadow-lg shadow-emerald-500/10">
+            <i class="fa-solid fa-leaf"></i>
+        </div>
+        <h2 class="text-xs font-semibold text-emerald-400 tracking-widest uppercase mb-4">Global Integration</h2>
+        <h3 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-6">UN Sustainable Development Goal 7</h3>
+        <p class="text-emerald-200 text-lg leading-relaxed mb-8">
+            Smart Energy Advisor is proudly aligned with **SDG 7: Affordable and Clean Energy**. Our app promotes energy efficiency, encourages smart conservation behaviors, and details your exact carbon emissions impact to help build a cleaner, sustainable grid.
+        </p>
+        <div class="inline-flex items-center gap-2 bg-emerald-800 py-2.5 px-6 rounded-2xl border border-emerald-700/50 text-xs font-bold uppercase tracking-wider text-emerald-300">
+            🌱 Promoting Energy Conservation Worldwide
+        </div>
+    </div>
+</section>
+{% endblock %}

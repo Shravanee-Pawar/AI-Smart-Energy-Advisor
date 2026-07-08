@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Smart Energy Advisor - Register{% endblock %}
+
+{% block public_content %}
+<section class="flex-1 bg-slate-50 flex items-center justify-center py-20 px-6 relative overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_-10%,rgba(16,185,129,0.08),rgba(255,255,255,0))]"></div>
+    
+    <div class="relative w-full max-w-md bg-white p-8 sm:p-10 rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/50 flex flex-col">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h2 class="text-2xl font-black text-slate-900 tracking-tight">Create an Account</h2>
+            <p class="text-slate-500 text-sm mt-1">Start tracking and optimizing your home energy usage.</p>
+        </div>
+        
+        <!-- Registration Form -->
+        <form action="{{ url_for('auth.register') }}" method="POST" class="space-y-5" onsubmit="return validateRegisterForm()">
+            <!-- Full Name -->
+            <div>
+                <label for="name" class="block text-xs font-bold uppercase text-slate-500 tracking-wider mb-2">Full Name</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+                        <i class="fa-solid fa-user"></i>
+                    </span>
+                    <input type="text" name="name" id="name" required placeholder="John Doe" class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-sm text-slate-700 bg-slate-50/50">
+                </div>
+            </div>
+            
+            <!-- Email Address -->
+            <div>
+                <label for="email" class="block text-xs font-bold uppercase text-slate-500 tracking-wider mb-2">Email Address</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+                        <i class="fa-solid fa-envelope"></i>
+                    </span>
+                    <input type="email" name="email" id="email" required placeholder="john@example.com" class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-sm text-slate-700 bg-slate-50/50">
+                </div>
+            </div>
+            
+            <!-- Password -->
+            <div>
+                <label for="password" class="block text-xs font-bold uppercase text-slate-500 tracking-wider mb-2">Password</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+                        <i class="fa-solid fa-lock"></i>
+                    </span>
+                    <input type="password" name="password" id="password" required placeholder="••••••••" class="w-full pl-10 pr-10 py-3 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-sm text-slate-700 bg-slate-50/50">
+                    <button type="button" onclick="togglePasswordVisibility('password', this)" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+                <p class="text-[10px] text-slate-400 mt-1 leading-normal">Must contain at least 8 characters, an uppercase letter, a number, and a special character.</p>
+            </div>
+            
+            <!-- Confirm Password -->
+            <div>
+                <label for="confirm_password" class="block text-xs font-bold uppercase text-slate-500 tracking-wider mb-2">Confirm Password</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </span>
+                    <input type="password" name="confirm_password" id="confirm_password" required placeholder="••••••••" class="w-full pl-10 pr-10 py-3 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-sm text-slate-700 bg-slate-50/50">
+                    <button type="button" onclick="togglePasswordVisibility('confirm_password', this)" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Custom Local Form Validation Warning Card -->
+            <div id="form-error-card" class="hidden flex items-center gap-2.5 bg-rose-50 border border-rose-100 text-rose-600 text-xs p-3 rounded-xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span id="form-error-text"></span>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3.5 rounded-2xl transition-all shadow-lg shadow-emerald-500/25 text-sm flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
+                Register Account <i class="fa-solid fa-user-plus"></i>
+            </button>
+        </form>
+        
+        <!-- Redirect to Login link -->
+        <div class="mt-8 text-center text-sm text-slate-500">
+            Already have an account? <a href="{{ url_for('auth.login') }}" class="font-bold text-emerald-600 hover:text-emerald-700 hover:underline">Log In</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

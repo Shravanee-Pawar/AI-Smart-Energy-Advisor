@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block page_header %}
+<i class="fa-solid fa-chart-pie text-emerald-500"></i> Interactive Energy Analytics
+{% endblock %}
+
+{% block content %}
+<!-- Prepopulated Warning Banner if utilizing mockup logs -->
+{% if graph_data.is_sample %}
+<div class="bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-2xl mb-8 flex items-start gap-3">
+    <div class="text-amber-500 text-lg mt-0.5"><i class="fa-solid fa-triangle-exclamation"></i></div>
+    <div class="text-xs leading-relaxed">
+        <p class="font-bold">Displaying Sample Historical Database</p>
+        <p class="mt-0.5 text-slate-600">You haven't logged enough monthly parameters yet. We are showing general yearly trends. Once you submit at least 3 monthly logs on the <a href="{{ url_for('main.usage') }}" class="text-emerald-700 font-bold hover:underline">Electricity Usage page</a>, this analytics dashboard will automatically switch to your actual records.</p>
+    </div>
+</div>
+{% endif %}
+
+<!-- Grid Panel for Charts -->
+<div class="space-y-8">
+    <!-- Top Row: Line & Bar side-by-side -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Chart 1: Monthly Consumption -->
+        <div class="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm flex flex-col">
+            <div class="mb-4">
+                <h4 class="text-sm font-bold text-slate-800">Monthly Electricity Consumption</h4>
+                <p class="text-[10px] text-slate-400">Total units consumed in kWh over the annual billing cycle</p>
+            </div>
+            <div class="relative flex-1 min-h-[300px]">
+                <canvas id="consumptionChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Chart 2: Monthly Cost -->
+        <div class="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm flex flex-col">
+            <div class="mb-4">
+                <h4 class="text-sm font-bold text-slate-800">Monthly Electricity Bills</h4>
+                <p class="text-[10px] text-slate-400">Estimated cost values in Rupees (₹) based on flat unit rate</p>
+            </div>
+            <div class="relative flex-1 min-h-[300px]">
+                <canvas id="billChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Middle Row: Appliance Allocation & Prediction Trend side-by-side -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Chart 3: Appliance Pie -->
+        <div class="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm flex flex-col">
+            <div class="mb-4">
+                <h4 class="text-sm font-bold text-slate-800">Appliance Consumption Allocation</h4>
+                <p class="text-[10px] text-slate-400">Percentage distribution of energy draws across primary heavy loads</p>
+            </div>
+            <div class="relative flex-1 min-h-[300px] flex items-center justify-center">
+                <div class="w-full max-w-[280px]">
+                    <canvas id="applianceChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart 4: Prediction Trend Line -->
+        <div class="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm flex flex-col">
+            <div class="mb-4">
+                <h4 class="text-sm font-bold text-slate-800">ML Forecast Variance (Future 3 Months)</h4>
+                <p class="text-[10px] text-slate-400">Predicted consumption values showing upper and lower variance bounds</p>
+            </div>
+            <div class="relative flex-1 min-h-[300px]">
+                <canvas id="predictionTrendChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Row: Weekly Load Graph -->
+    <div class="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm flex flex-col">
+        <div class="mb-4">
+            <h4 class="text-sm font-bold text-slate-800">Weekly Energy Load Distribution</h4>
+            <p class="text-[10px] text-slate-400">Estimated hourly draw levels (kWh) tracked from Monday to Sunday</p>
+        </div>
+        <div class="relative min-h-[300px] w-full">
+            <canvas id="weeklyLoadChart"></canvas>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<!-- Load Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Inject dynamic database statistics as window properties for charts.js -->
+<script>
+    window.energyGraphData = {{ graph_data | tojson | safe }};
+</script>
+<!-- Load charts.js render file -->
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+{% endblock %}

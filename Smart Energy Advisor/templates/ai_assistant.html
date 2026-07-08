@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block page_header %}
+<i class="fa-solid fa-robot text-emerald-500"></i> AI Energy Consultant
+{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto flex flex-col h-[calc(100vh-12rem)] min-h-[500px] bg-white rounded-3xl border border-slate-200/60 shadow-sm overflow-hidden">
+    <!-- Chat Window Header -->
+    <div class="bg-slate-900 text-white px-6 py-4 flex items-center gap-3 border-b border-slate-800">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-lg shadow-md shadow-emerald-500/25">
+            <i class="fa-solid fa-robot"></i>
+        </div>
+        <div>
+            <h3 class="font-bold text-sm tracking-wide">Smarty</h3>
+            <p class="text-[10px] text-emerald-400 font-semibold flex items-center gap-1">
+                <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span> Online AI Energy Advisor
+            </p>
+        </div>
+        <button onclick="clearChatHistory()" class="ml-auto text-slate-400 hover:text-slate-200 p-2 rounded-lg transition-colors text-xs flex items-center gap-1">
+            <i class="fa-solid fa-trash-can"></i> Clear Chat
+        </button>
+    </div>
+
+    <!-- Scrollable Chat Window -->
+    <div id="chat-window" class="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-50/50">
+        <!-- Initial Message -->
+        <div class="chat-bubble-ai flex items-start gap-3 max-w-[80%]">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-sm shrink-0">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+            <div class="bg-white p-4 rounded-3xl rounded-tl-none border border-slate-100 shadow-sm text-sm text-slate-700 leading-relaxed">
+                Hello! I am **Smarty**, your AI Energy Consultant. Ask me how to optimize your appliances, reduce bills, or decrease your carbon emissions footprint. How can I help you today?
+            </div>
+        </div>
+
+        <!-- Dynamic chat history rendered via JS -->
+    </div>
+
+    <!-- Typing Indicator Card -->
+    <div id="typing-indicator" class="hidden px-6 py-3 bg-slate-50/30 flex items-center gap-2 border-t border-slate-100">
+        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+            <span class="w-1 h-1 bg-slate-400 rounded-full animate-bounce"></span>
+            <span class="w-1 h-1 bg-slate-400 rounded-full animate-bounce delay-75"></span>
+            <span class="w-1 h-1 bg-slate-400 rounded-full animate-bounce delay-150"></span>
+            Smarty is thinking...
+        </span>
+    </div>
+
+    <!-- Suggestions panel -->
+    <div class="px-6 py-3 border-t border-slate-100/60 bg-white flex flex-wrap gap-2 overflow-x-auto select-none">
+        <button onclick="sendSuggestedPrompt(this.innerText)" class="text-xs text-slate-500 hover:text-emerald-600 bg-slate-100 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-200/50 px-3 py-1.5 rounded-full transition-all shrink-0">
+            How can I reduce my electricity bill?
+        </button>
+        <button onclick="sendSuggestedPrompt(this.innerText)" class="text-xs text-slate-500 hover:text-emerald-600 bg-slate-100 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-200/50 px-3 py-1.5 rounded-full transition-all shrink-0">
+            Why is my bill increasing?
+        </button>
+        <button onclick="sendSuggestedPrompt(this.innerText)" class="text-xs text-slate-500 hover:text-emerald-600 bg-slate-100 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-200/50 px-3 py-1.5 rounded-full transition-all shrink-0">
+            Best appliances to save electricity?
+        </button>
+        <button onclick="sendSuggestedPrompt(this.innerText)" class="text-xs text-slate-500 hover:text-emerald-600 bg-slate-100 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-200/50 px-3 py-1.5 rounded-full transition-all shrink-0">
+            How can I reduce AC consumption?
+        </button>
+    </div>
+
+    <!-- Chat input form -->
+    <form id="chat-input-form" onsubmit="handleChatSubmit(event)" class="p-4 bg-white border-t border-slate-150 flex gap-3">
+        <input type="text" id="chat-input" required placeholder="Type your energy query here..." class="flex-1 px-4 py-3 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-sm text-slate-700 bg-slate-50/50">
+        <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-white w-12 h-12 rounded-2xl flex items-center justify-center transition-all shadow-md shadow-emerald-500/25 shrink-0 transform hover:-translate-y-0.5">
+            <i class="fa-solid fa-paper-plane"></i>
+        </button>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Define AJAX endpoints as global variables for chat.js
+    window.chatApiEndpoint = "{{ url_for('ai.assistant') }}";
+</script>
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}
