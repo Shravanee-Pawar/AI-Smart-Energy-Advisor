@@ -7,7 +7,8 @@ class DashboardResponse(BaseModel):
     average_daily: float
     estimated_bill: float
     latest_consumption: float
-
+    latest_bill: float
+    
 class ChartData(BaseModel):
     month: str
     units: float

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.api import auth, energy, prediction, chat, dashboard
+from app.api import auth, energy, prediction, chat, dashboard, profile
 
 app = FastAPI(
     title="AI Smart Energy Advisor API",
@@ -12,6 +12,7 @@ app.include_router(energy.router, prefix="/api/energy", tags=["Energy"])
 app.include_router(prediction.router, prefix="/api/prediction", tags=["Prediction"])
 app.include_router(chat.router, prefix="/api/chat", tags=["Chat"])
 app.include_router(dashboard.router, prefix="/api/dashboard", tags=["Dashboard"])
+app.include_router(profile.router, prefix="/api/profile", tags=["Profile"])
 
 @app.get("/")
 def home():

@@ -14,6 +14,7 @@ def get_dashboard_data():
             "average_daily": 0.0,
             "estimated_bill": 0.0,
             "latest_consumption": 0.0,
+            "latest_bill": 0.0,
         }
 
     total_records = len(records)
@@ -29,6 +30,7 @@ def get_dashboard_data():
 
     # Latest record
     latest_consumption = records[-1].get("units", 0)
+    latest_bill = records[-1].get("bill", 0)
 
     return {
         "total_records": total_records,
@@ -36,7 +38,9 @@ def get_dashboard_data():
         "average_daily": round(average_daily, 2),
         "estimated_bill": round(estimated_bill, 2),
         "latest_consumption": latest_consumption,
+        "latest_bill": latest_bill,
     }
+
 
 def get_chart_data():
     docs = db.collection("energy_usage").stream()
