@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Prediction | Smart Energy Advisor</title>
+
+    <!-- Tailwind -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Font -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+
+    <link rel="stylesheet"
+          href="../static/css/style.css">
+
+</head>
+
+<body class="bg-slate-50 font-['Inter']">
+
+<div class="flex min-h-screen">
+
+    <!-- Sidebar -->
+
+    <aside class="w-64 bg-slate-900 text-white flex flex-col">
+
+        <div class="p-6 border-b border-slate-800">
+
+            <div class="flex items-center gap-3">
+
+                <div class="bg-emerald-500 p-3 rounded-xl">
+
+                    <i class="fa-solid fa-bolt"></i>
+
+                </div>
+
+                <div>
+
+                    <h2 class="font-bold text-lg">
+
+                        Smart Energy
+
+                    </h2>
+
+                    <p class="text-xs text-slate-400">
+
+                        Advisor AI
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <nav class="flex-1 p-4 space-y-2">
+
+            <a href="dashboard.html"
+               class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-house"></i>
+
+                Dashboard
+
+            </a>
+
+            <a href="usage.html"
+               class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-bolt"></i>
+
+                Electricity Usage
+
+            </a>
+
+            <a href="prediction.html"
+               class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-600/10 text-emerald-400 border border-emerald-500/20">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Prediction
+
+            </a>
+
+            <a href="bill.html"
+               class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+
+                Estimated Bill
+
+            </a>
+
+            <a href="analytics.html"
+               class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-chart-pie"></i>
+
+                Analytics
+
+            </a>
+
+            <a href="ai_assistant.html"
+               class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-robot"></i>
+
+                AI Assistant
+
+            </a>
+
+            <a href="recommendation.html"
+               class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-lightbulb"></i>
+
+                Recommendations
+
+            </a>
+
+            <a href="profile.html"
+               class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-user"></i>
+
+                Profile
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- Main -->
+
+    <main class="flex-1">
+
+        <header class="bg-white border-b border-slate-200 px-8 py-5">
+
+            <h1 class="text-2xl font-bold flex items-center gap-3">
+
+                <i class="fa-solid fa-chart-line text-emerald-500"></i>
+
+                Next Month Consumption Forecast
+
+            </h1>
+
+        </header>
+
+        <div class="max-w-5xl mx-auto p-8">
+
+            <div class="bg-white rounded-3xl shadow-sm overflow-hidden">
+
+                <div class="bg-slate-900 text-white p-8 relative">
+
+                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_75%_30%,rgba(59,130,246,.15),transparent)]"></div>
+
+                    <div class="relative flex justify-between items-center flex-wrap gap-5">
+
+                        <div>
+
+                            <span class="bg-blue-500/20 text-blue-300 text-xs px-3 py-1 rounded-full">
+
+                                <i class="fa-solid fa-brain"></i>
+
+                                Scikit-Learn Model
+
+                            </span>
+
+                            <h2 class="text-3xl font-black mt-4">
+
+                                Electricity Forecast Report
+
+                            </h2>
+
+                            <p class="text-slate-400 text-sm mt-2">
+
+                                Generated using your latest energy usage.
+
+                            </p>
+
+                        </div>
+
+                        <div class="bg-white/10 rounded-2xl p-5 text-center">
+
+                            <p class="text-xs uppercase text-slate-300">
+
+                                Confidence
+
+                            </p>
+
+                            <h2 id="confidence"
+
+                                class="text-4xl font-black text-emerald-400">
+
+                                95%
+
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="p-8">
+                                        <!-- Prediction Results -->
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+                        <!-- Predicted Units -->
+
+                        <div class="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex justify-between items-center">
+
+                            <div>
+
+                                <p class="text-xs uppercase tracking-wider font-bold text-slate-500">
+
+                                    Predicted Units
+
+                                </p>
+
+                                <h2 class="text-4xl font-black mt-2">
+
+                                    <span id="predictedUnits">--</span>
+
+                                    <span class="text-sm font-medium">
+
+                                        kWh
+
+                                    </span>
+
+                                </h2>
+
+                            </div>
+
+                            <div class="w-14 h-14 rounded-2xl bg-emerald-100 flex items-center justify-center">
+
+                                <i class="fa-solid fa-bolt text-emerald-500 text-xl"></i>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Estimated Bill -->
+
+                        <div class="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex justify-between items-center">
+
+                            <div>
+
+                                <p class="text-xs uppercase tracking-wider font-bold text-slate-500">
+
+                                    Estimated Bill
+
+                                </p>
+
+                                <h2 class="text-4xl font-black mt-2">
+
+                                    ₹<span id="predictedBill">--</span>
+
+                                </h2>
+
+                            </div>
+
+                            <div class="w-14 h-14 rounded-2xl bg-indigo-100 flex items-center justify-center">
+
+                                <i class="fa-solid fa-file-invoice-dollar text-indigo-500 text-xl"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Model Input Features -->
+
+                    <h3 class="text-sm uppercase font-bold tracking-wider text-slate-500 mb-5">
+
+                        Input Features
+
+                    </h3>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-5 mb-10">
+
+                        <div class="bg-slate-50 rounded-2xl border border-slate-100 p-5 text-center">
+
+                            <p class="text-xs text-slate-400 uppercase">
+
+                                Year
+
+                            </p>
+
+                            <h3 id="featureYear"
+
+                                class="text-lg font-bold mt-2">
+
+                                --
+
+                            </h3>
+
+                        </div>
+
+                        <div class="bg-slate-50 rounded-2xl border border-slate-100 p-5 text-center">
+
+                            <p class="text-xs text-slate-400 uppercase">
+
+                                Month
+
+                            </p>
+
+                            <h3 id="featureMonth"
+
+                                class="text-lg font-bold mt-2">
+
+                                --
+
+                            </h3>
+
+                        </div>
+
+                        <div class="bg-slate-50 rounded-2xl border border-slate-100 p-5 text-center">
+
+                            <p class="text-xs text-slate-400 uppercase">
+
+                                Previous Month
+
+                            </p>
+
+                            <h3 id="featureLag1"
+
+                                class="text-lg font-bold mt-2">
+
+                                --
+
+                            </h3>
+
+                        </div>
+
+                        <div class="bg-slate-50 rounded-2xl border border-slate-100 p-5 text-center">
+
+                            <p class="text-xs text-slate-400 uppercase">
+
+                                Rolling Mean
+
+                            </p>
+
+                            <h3 id="featureRolling"
+
+                                class="text-lg font-bold mt-2">
+
+                                --
+
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Information Card -->
+
+                    <div class="bg-blue-50 border border-blue-100 rounded-3xl p-6 flex gap-5 mb-8">
+
+                        <div class="text-blue-500 text-xl">
+
+                            <i class="fa-solid fa-circle-info"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3 class="font-bold text-slate-800 mb-3">
+
+                                How the Prediction Works
+
+                            </h3>
+
+                            <p class="text-sm text-slate-600 leading-7">
+
+                                The prediction is generated using a trained Machine Learning
+                                Random Forest Regression model.
+
+                                The model analyses historical electricity usage,
+                                previous month consumption,
+                                rolling averages,
+                                and seasonal trends
+                                to estimate next month's energy consumption.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Buttons -->
+
+                    <div class="flex gap-4 justify-end">
+
+                        <a href="bill.html"
+
+                           class="bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-3 rounded-2xl font-semibold">
+
+                            <i class="fa-solid fa-file-invoice-dollar mr-2"></i>
+
+                            View Bill
+
+                        </a>
+
+                        <a href="recommendation.html"
+
+                           class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-2xl font-semibold">
+
+                            <i class="fa-solid fa-lightbulb mr-2"></i>
+
+                            AI Recommendations
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <script>
+
+const API_BASE = "http://127.0.0.1:8000";
+
+/* ------------------------------------
+   Load Prediction
+-------------------------------------*/
+
+async function loadPrediction() {
+
+    try {
+
+        const payload = {
+
+            Year: 2007,
+            Month: 8,
+            lag_1: 497.09,
+            lag_2: 595.35,
+            rolling_mean_3: 608.64
+
+        };
+
+        const response = await fetch(`${API_BASE}/api/prediction/`, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(payload)
+
+        });
+
+        const data = await response.json();
+
+        console.log(data);
+
+        // Prediction Results
+
+        document.getElementById("predictedUnits").textContent =
+            data.predicted_units;
+
+        document.getElementById("predictedBill").textContent =
+            data.predicted_bill;
+
+        // Confidence
+
+        document.getElementById("confidence").textContent =
+            "95%";
+
+        // Input Features
+
+        document.getElementById("featureYear").textContent =
+            payload.Year;
+
+        document.getElementById("featureMonth").textContent =
+            payload.Month;
+
+        document.getElementById("featureLag1").textContent =
+            payload.lag_1;
+
+        document.getElementById("featureRolling").textContent =
+            payload.rolling_mean_3;
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert("Unable to load prediction.");
+
+    }
+
+}
+
+loadPrediction();
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Energy Consultant | Smart Energy Advisor</title>
+
+
+<!-- Tailwind CSS -->
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+
+<!-- Font Awesome -->
+
+<link 
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+<!-- Google Font -->
+
+<link 
+href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+
+
+<style>
+
+body{
+
+font-family:'Inter',sans-serif;
+
+}
+
+
+
+.chat-scroll::-webkit-scrollbar{
+
+width:6px;
+
+}
+
+
+.chat-scroll::-webkit-scrollbar-thumb{
+
+background:#10b981;
+
+border-radius:10px;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+
+
+
+<body class="bg-gray-100">
+
+
+
+
+
+<div class="flex min-h-screen">
+
+
+
+
+
+
+<!-- ================= SIDEBAR ================= -->
+
+
+<aside class="w-64 bg-gray-900 text-white hidden md:block">
+
+
+
+<div class="p-6">
+
+
+<h1 class="text-xl font-bold text-emerald-400">
+
+
+<i class="fa-solid fa-bolt"></i>
+
+Smart Energy Advisor
+
+
+</h1>
+
+
+<p class="text-gray-400 text-sm mt-2">
+
+AI Powered Energy Management
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<nav class="px-4 space-y-2">
+
+
+
+
+
+<a href="dashboard.html"
+
+class="block px-4 py-3 rounded-lg hover:bg-emerald-800">
+
+
+<i class="fa-solid fa-chart-line mr-3"></i>
+
+Dashboard
+
+
+</a>
+
+
+
+
+
+
+<a href="usage.html"
+
+class="block px-4 py-3 rounded-lg hover:bg-emerald-800">
+
+
+<i class="fa-solid fa-plug mr-3"></i>
+
+Energy Usage
+
+
+</a>
+
+
+
+
+
+
+<a href="prediction.html"
+
+class="block px-4 py-3 rounded-lg hover:bg-emerald-800">
+
+
+<i class="fa-solid fa-brain mr-3"></i>
+
+Prediction
+
+
+</a>
+
+
+
+
+
+
+
+<a href="bill.html"
+
+class="block px-4 py-3 rounded-lg hover:bg-emerald-800">
+
+
+<i class="fa-solid fa-file-invoice-dollar mr-3"></i>
+
+Bill
+
+
+</a>
+
+
+
+
+
+
+<a href="analytics.html"
+
+class="block px-4 py-3 rounded-lg hover:bg-emerald-800">
+
+
+<i class="fa-solid fa-chart-pie mr-3"></i>
+
+Analytics
+
+
+</a>
+
+
+
+
+
+
+<a href="ai_assistant.html"
+
+class="block bg-emerald-700 px-4 py-3 rounded-lg">
+
+
+<i class="fa-solid fa-robot mr-3"></i>
+
+AI Assistant
+
+
+</a>
+
+
+
+
+
+
+
+<a href="recommendations.html"
+
+class="block px-4 py-3 rounded-lg hover:bg-emerald-800">
+
+
+<i class="fa-solid fa-lightbulb mr-3"></i>
+
+Recommendations
+
+
+</a>
+
+
+
+
+
+
+<a href="profile.html"
+
+class="block px-4 py-3 rounded-lg hover:bg-emerald-800">
+
+
+<i class="fa-solid fa-user mr-3"></i>
+
+Profile
+
+
+</a>
+
+
+
+
+
+</nav>
+
+
+</aside>
+
+
+
+
+
+
+
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+
+
+<main class="flex-1">
+
+
+
+
+
+
+<!-- HEADER -->
+
+
+<header class="bg-white shadow px-6 py-4">
+
+
+<h2 class="text-2xl font-bold text-gray-800">
+
+
+<i class="fa-solid fa-robot text-emerald-500"></i>
+
+
+AI Energy Consultant
+
+
+</h2>
+
+
+
+<p class="text-gray-500 text-sm">
+
+Your personal AI powered electricity advisor
+
+
+</p>
+
+
+
+</header>
+
+
+
+
+
+
+
+
+<section class="p-6">
+
+
+
+
+
+<div class="max-w-4xl mx-auto flex flex-col h-[calc(100vh-12rem)] min-h-[500px] bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
+
+
+
+
+
+
+
+<!-- CHAT HEADER -->
+
+
+<div class="bg-gray-900 text-white px-6 py-4 flex items-center gap-3">
+
+
+
+<div class="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center">
+
+
+<i class="fa-solid fa-robot"></i>
+
+
+</div>
+
+
+
+
+
+<div>
+
+
+<h3 class="font-bold text-sm">
+
+Smarty
+
+</h3>
+
+
+<p class="text-xs text-emerald-400 flex items-center gap-1">
+
+
+<span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+
+
+Online AI Energy Advisor
+
+
+</p>
+
+
+</div>
+
+
+
+
+
+<button onclick="clearChatHistory()"
+
+class="ml-auto text-gray-400 hover:text-white text-xs">
+
+
+<i class="fa-solid fa-trash"></i>
+
+
+Clear Chat
+
+
+</button>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- CHAT WINDOW -->
+
+
+<div id="chat-window"
+
+class="flex-1 overflow-y-auto p-6 space-y-4 bg-gray-50 chat-scroll">
+
+
+
+
+
+
+<!-- INITIAL AI MESSAGE -->
+
+
+<div class="flex items-start gap-3 max-w-[80%]">
+
+
+<div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center">
+
+
+<i class="fa-solid fa-robot text-sm"></i>
+
+
+</div>
+
+
+
+
+
+<div class="bg-white p-4 rounded-3xl rounded-tl-none border text-sm text-gray-700 shadow-sm">
+
+
+Hello! I am <b>Smarty</b>, your AI Energy Consultant.
+
+
+Ask me about electricity bills, appliance optimization, energy saving tips, or reducing carbon footprint.
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<!-- Dynamic messages will appear here -->
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- TYPING INDICATOR -->
+
+
+<div id="typing-indicator"
+
+class="hidden px-6 py-3 bg-gray-50 border-t flex items-center gap-2">
+
+
+<span class="text-xs text-gray-400 font-semibold">
+
+
+<i class="fa-solid fa-circle-notch fa-spin mr-2"></i>
+
+
+Smarty is thinking...
+
+
+</span>
+
+
+</div>
+<!-- SUGGESTED QUESTIONS -->
+
+
+<div class="px-6 py-3 border-t bg-white flex flex-wrap gap-2">
+
+
+<button onclick="sendSuggestedPrompt(this.innerText)"
+
+class="text-xs bg-gray-100 hover:bg-emerald-50 text-gray-600 hover:text-emerald-600 px-3 py-2 rounded-full">
+
+
+How can I reduce my electricity bill?
+
+
+</button>
+
+
+
+
+
+<button onclick="sendSuggestedPrompt(this.innerText)"
+
+class="text-xs bg-gray-100 hover:bg-emerald-50 text-gray-600 hover:text-emerald-600 px-3 py-2 rounded-full">
+
+
+Why is my bill increasing?
+
+
+</button>
+
+
+
+
+
+<button onclick="sendSuggestedPrompt(this.innerText)"
+
+class="text-xs bg-gray-100 hover:bg-emerald-50 text-gray-600 hover:text-emerald-600 px-3 py-2 rounded-full">
+
+
+Best appliances to save electricity?
+
+
+</button>
+
+
+
+
+
+
+<button onclick="sendSuggestedPrompt(this.innerText)"
+
+class="text-xs bg-gray-100 hover:bg-emerald-50 text-gray-600 hover:text-emerald-600 px-3 py-2 rounded-full">
+
+
+How can I reduce AC consumption?
+
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- INPUT AREA -->
+
+
+<form id="chat-form"
+
+onsubmit="handleChatSubmit(event)"
+
+class="p-4 bg-white border-t flex gap-3">
+
+
+<input 
+
+id="chat-input"
+
+type="text"
+
+required
+
+placeholder="Type your energy query here..."
+
+class="flex-1 px-4 py-3 rounded-2xl border focus:outline-none focus:ring-2 focus:ring-emerald-400 text-sm">
+
+
+
+
+
+<button type="submit"
+
+class="bg-emerald-500 hover:bg-emerald-600 text-white w-12 h-12 rounded-2xl">
+
+
+<i class="fa-solid fa-paper-plane"></i>
+
+
+</button>
+
+
+
+</form>
+
+
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+</main>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+
+
+// ================================
+// API CONFIG
+// ================================
+
+
+const API_URL = "http://127.0.0.1:8000/api/chat/";
+
+
+
+
+
+
+
+// ================================
+// SEND CHAT MESSAGE
+// ================================
+
+
+async function sendMessage(message){
+
+
+
+if(!message.trim())
+
+return;
+
+
+
+
+
+addUserMessage(message);
+
+
+
+
+document.getElementById("typing-indicator")
+
+.classList.remove("hidden");
+
+
+
+
+
+
+try{
+
+
+
+const response = await fetch(
+
+API_URL,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+
+body:JSON.stringify({
+
+message:message
+
+})
+
+}
+
+
+);
+
+
+
+
+
+
+if(!response.ok){
+
+throw new Error("Chat API Error");
+
+}
+
+
+
+
+
+
+
+const data = await response.json();
+
+
+
+
+
+
+let aiReply =
+
+data.response ||
+
+data.message ||
+
+data.reply ||
+
+"Sorry, I could not generate a response.";
+
+
+
+
+
+
+addAIMessage(aiReply);
+
+
+
+
+}
+
+catch(error){
+
+
+
+console.error(
+
+"AI Chat Error:",
+
+error
+
+);
+
+
+
+
+addAIMessage(
+
+"Sorry, I am unable to connect with the AI service right now."
+
+);
+
+
+
+}
+
+finally{
+
+
+
+document.getElementById("typing-indicator")
+
+.classList.add("hidden");
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// FORM SUBMIT
+// ================================
+
+
+function handleChatSubmit(event){
+
+
+event.preventDefault();
+
+
+
+const input = document.getElementById("chat-input");
+
+
+
+const message = input.value;
+
+
+
+input.value="";
+
+
+
+sendMessage(message);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// SUGGESTION BUTTON
+// ================================
+
+
+function sendSuggestedPrompt(text){
+
+
+sendMessage(text);
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// ADD USER MESSAGE
+// ================================
+
+
+function addUserMessage(message){
+
+
+
+const chatWindow = document.getElementById("chat-window");
+
+
+
+const div = document.createElement("div");
+
+
+
+div.className =
+
+"flex justify-end";
+
+
+
+
+div.innerHTML = `
+
+<div class="bg-emerald-500 text-white p-4 rounded-3xl rounded-tr-none max-w-[80%] text-sm shadow">
+
+
+${message}
+
+
+</div>
+
+`;
+
+
+
+chatWindow.appendChild(div);
+
+
+
+scrollChat();
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// ADD AI MESSAGE
+// ================================
+
+
+function addAIMessage(message){
+
+
+
+const chatWindow = document.getElementById("chat-window");
+
+
+
+const div = document.createElement("div");
+
+
+
+div.className =
+
+"flex items-start gap-3 max-w-[80%]";
+
+
+
+div.innerHTML = `
+
+
+<div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center">
+
+
+<i class="fa-solid fa-robot text-sm"></i>
+
+
+</div>
+
+
+
+
+<div class="bg-white p-4 rounded-3xl rounded-tl-none border text-sm text-gray-700 shadow-sm">
+
+
+${message}
+
+
+</div>
+
+
+`;
+
+
+
+chatWindow.appendChild(div);
+
+
+
+scrollChat();
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// AUTO SCROLL
+// ================================
+
+
+function scrollChat(){
+
+
+const chatWindow = document.getElementById("chat-window");
+
+
+
+chatWindow.scrollTop = chatWindow.scrollHeight;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// CLEAR CHAT
+// ================================
+
+
+function clearChatHistory(){
+
+
+
+const chatWindow = document.getElementById("chat-window");
+
+
+
+chatWindow.innerHTML = `
+
+
+<div class="flex items-start gap-3 max-w-[80%]">
+
+
+<div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center">
+
+
+<i class="fa-solid fa-robot text-sm"></i>
+
+
+</div>
+
+
+
+<div class="bg-white p-4 rounded-3xl rounded-tl-none border text-sm text-gray-700 shadow-sm">
+
+
+Hello! I am <b>Smarty</b>. How can I help you today?
+
+
+</div>
+
+
+
+</div>
+
+
+`;
+
+
+
+}
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+</body>
+
+
+</html>

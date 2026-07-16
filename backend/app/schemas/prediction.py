@@ -1,15 +1,14 @@
 from pydantic import BaseModel
 
 
-# Request Schema
 class PredictionRequest(BaseModel):
-    month: str
-    previous_units: float
-    temperature: float
-    occupants: int
+    Year: int
+    Month: int
+    lag_1: float
+    lag_2: float
+    rolling_mean_3: float
 
 
-# Response Schema
 class PredictionResponse(BaseModel):
     predicted_units: float
     predicted_bill: float

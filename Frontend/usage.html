@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Electricity Usage | Smart Energy Advisor</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet"
+          href="../static/css/style.css">
+
+</head>
+
+<body class="bg-slate-50 font-['Inter'] text-slate-800">
+
+<div class="flex min-h-screen">
+
+    <!-- Sidebar -->
+
+    <aside class="w-64 bg-slate-900 text-white flex flex-col">
+
+        <div class="p-6 border-b border-slate-800">
+
+            <div class="flex items-center gap-3">
+
+                <div class="bg-emerald-500 p-3 rounded-xl">
+
+                    <i class="fa-solid fa-bolt text-white"></i>
+
+                </div>
+
+                <div>
+
+                    <h2 class="font-bold text-lg">
+                        Smart Energy
+                    </h2>
+
+                    <p class="text-xs text-slate-400">
+                        Advisor AI
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <nav class="flex-1 p-4 space-y-2">
+
+            <a href="dashboard.html"
+               class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-house"></i>
+
+                Dashboard
+
+            </a>
+
+            <a href="usage.html"
+               class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-600/10 text-emerald-400 border border-emerald-500/20">
+
+                <i class="fa-solid fa-bolt"></i>
+
+                Electricity Usage
+
+            </a>
+
+            <a href="prediction.html"
+               class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Predictions
+
+            </a>
+
+            <a href="bill.html"
+               class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+
+                Estimated Bill
+
+            </a>
+
+            <a href="analytics.html"
+               class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-chart-pie"></i>
+
+                Analytics
+
+            </a>
+
+            <a href="ai_assistant.html"
+               class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-robot"></i>
+
+                AI Assistant
+
+            </a>
+
+            <a href="recommendation.html"
+               class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-lightbulb"></i>
+
+                Recommendations
+
+            </a>
+
+            <a href="profile.html"
+               class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-user"></i>
+
+                Profile
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- Main Content -->
+
+    <main class="flex-1 overflow-y-auto">
+
+        <!-- Header -->
+
+        <header class="bg-white border-b border-slate-200 px-8 py-5 flex justify-between items-center">
+
+            <h1 class="text-2xl font-bold flex items-center gap-3">
+
+                <i class="fa-solid fa-bolt text-emerald-500"></i>
+
+                Electricity Usage Parameters
+
+            </h1>
+
+        </header>
+
+        <div class="p-8">
+
+            <div class="max-w-4xl mx-auto">
+
+                <div class="bg-white rounded-3xl border border-slate-200/60 shadow-sm p-6 sm:p-8 mb-8">
+
+                    <h3 class="text-lg font-black text-slate-800 tracking-tight mb-2">
+
+                        Log Monthly Energy Parameters
+
+                    </h3>
+
+                    <p class="text-sm text-slate-500 mb-8">
+
+                        Enter your household statistics and appliance configurations.
+                        These parameters will be used for energy monitoring,
+                        prediction,
+                        bill estimation,
+                        and AI-powered recommendations.
+
+                    </p>
+
+                    <!-- Usage Form -->
+
+                    <form id="usageForm" class="space-y-8">
+                        <!-- Section 1 -->
+<div>
+
+    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+
+        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
+
+        1. Core Energy & Rates
+
+    </h4>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Units -->
+
+        <div>
+
+            <label class="block text-xs font-bold uppercase text-slate-500 tracking-wider mb-2">
+
+                Current Units Consumed (kWh)
+
+            </label>
+
+            <div class="relative">
+
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+
+                    <i class="fa-solid fa-gauge"></i>
+
+                </span>
+
+                <input
+                    id="units_consumed"
+                    type="number"
+                    step="0.1"
+                    required
+                    class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 bg-slate-50">
+
+            </div>
+
+        </div>
+
+        <!-- Rate -->
+
+        <div>
+
+            <label class="block text-xs font-bold uppercase text-slate-500 tracking-wider mb-2">
+
+                Cost Per Unit (₹)
+
+            </label>
+
+            <div class="relative">
+
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+
+                    ₹
+
+                </span>
+
+                <input
+                    id="rate"
+                    type="number"
+                    step="0.1"
+                    required
+                    class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 bg-slate-50">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<hr class="border-slate-100">
+
+<!-- Section 2 -->
+
+<div>
+
+    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+
+        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
+
+        2. Household Details
+
+    </h4>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <div>
+
+            <label class="block text-xs font-bold uppercase text-slate-500 tracking-wider mb-2">
+
+                Family Members
+
+            </label>
+
+            <input
+                id="family_members"
+                type="number"
+                min="1"
+                max="15"
+                class="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50">
+
+        </div>
+
+        <div>
+
+            <label class="block text-xs font-bold uppercase text-slate-500 tracking-wider mb-2">
+
+                House Type
+
+            </label>
+
+            <select
+                id="house_type"
+                class="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50">
+
+                <option>Apartment</option>
+
+                <option>Independent House</option>
+
+                <option>Villa</option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+</div>
+
+<hr class="border-slate-100">
+
+<!-- Section 3 -->
+
+<div>
+
+    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+
+        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
+
+        3. Heavy Appliance Load Profile
+
+    </h4>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
+
+        <div>
+
+            <label class="block text-xs font-semibold text-slate-600 mb-2">
+
+                AC Hours
+
+            </label>
+
+            <input
+                id="ac_hours"
+                type="number"
+                step="0.5"
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-200">
+
+        </div>
+
+        <div>
+
+            <label class="block text-xs font-semibold text-slate-600 mb-2">
+
+                Fan Hours
+
+            </label>
+
+            <input
+                id="fan_hours"
+                type="number"
+                step="0.5"
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-200">
+
+        </div>
+
+        <div>
+
+            <label class="block text-xs font-semibold text-slate-600 mb-2">
+
+                TV Hours
+
+            </label>
+
+            <input
+                id="tv_hours"
+                type="number"
+                step="0.5"
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-200">
+
+        </div>
+
+    </div>
+
+    <!-- Appliances -->
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+        <label class="flex items-center p-4 bg-slate-50 rounded-2xl border">
+
+            <input id="refrigerator" type="checkbox" checked class="accent-emerald-500">
+
+            <span class="ml-3">
+
+                <span class="block font-bold text-sm">
+
+                    Refrigerator ❄️
+
+                </span>
+
+                <span class="block text-xs text-slate-400">
+
+                    Always-on background load
+
+                </span>
+
+            </span>
+
+        </label>
+
+        <label class="flex items-center p-4 bg-slate-50 rounded-2xl border">
+
+            <input id="washing_machine" type="checkbox" checked class="accent-emerald-500">
+
+            <span class="ml-3">
+
+                <span class="block font-bold text-sm">
+
+                    Washing Machine 🧺
+
+                </span>
+
+                <span class="block text-xs text-slate-400">
+
+                    High power appliance
+
+                </span>
+
+            </span>
+
+        </label>
+
+        <label class="flex items-center p-4 bg-slate-50 rounded-2xl border">
+
+            <input id="cooler" type="checkbox" class="accent-emerald-500">
+
+            <span class="ml-3">
+
+                <span class="block font-bold text-sm">
+
+                    Cooler 🌀
+
+                </span>
+
+                <span class="block text-xs text-slate-400">
+
+                    Seasonal cooling
+
+                </span>
+
+            </span>
+
+        </label>
+
+        <label class="flex items-center p-4 bg-slate-50 rounded-2xl border">
+
+            <input id="other_appliances" type="checkbox" class="accent-emerald-500">
+
+            <span class="ml-3">
+
+                <span class="block font-bold text-sm">
+
+                    Other Appliances 🔌
+
+                </span>
+
+                <span class="block text-xs text-slate-400">
+
+                    Heater, Microwave, EV Charger etc.
+
+                </span>
+
+            </span>
+
+        </label>
+
+    </div>
+
+</div>
+
+<div class="flex flex-col sm:flex-row gap-4 pt-4">
+
+    <button
+        type="submit"
+        class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3.5 px-8 rounded-2xl shadow-md">
+
+        Save Parameters
+
+        <i class="fa-solid fa-circle-check ml-2"></i>
+
+    </button>
+
+    <button
+        type="button"
+        id="resetBtn"
+        class="bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 font-semibold py-3.5 px-8 rounded-2xl">
+
+        Reset Database Logs
+
+        <i class="fa-solid fa-rotate-left ml-2"></i>
+
+    </button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+<script>
+const API_BASE = "http://127.0.0.1:8000";
+
+/* --------------------------
+   Load Latest Energy Record
+---------------------------*/
+async function loadUsage() {
+
+    try {
+
+        const response = await fetch(`${API_BASE}/api/energy/`);
+
+        if (!response.ok) return;
+
+        const data = await response.json();
+
+        // If API returns an array
+        const usage = Array.isArray(data)
+            ? data[data.length - 1]
+            : data;
+
+        if (!usage) return;
+
+        document.getElementById("units_consumed").value =
+            usage.units_consumed || "";
+
+        document.getElementById("rate").value =
+            usage.rate || "";
+
+        document.getElementById("family_members").value =
+            usage.family_members || "";
+
+        document.getElementById("house_type").value =
+            usage.house_type || "Apartment";
+
+        document.getElementById("ac_hours").value =
+            usage.ac_hours || "";
+
+        document.getElementById("fan_hours").value =
+            usage.fan_hours || "";
+
+        document.getElementById("tv_hours").value =
+            usage.tv_hours || "";
+
+        document.getElementById("refrigerator").checked =
+            usage.refrigerator || false;
+
+        document.getElementById("washing_machine").checked =
+            usage.washing_machine || false;
+
+        document.getElementById("cooler").checked =
+            usage.cooler || false;
+
+        document.getElementById("other_appliances").checked =
+            usage.other_appliances || false;
+
+    }
+
+    catch (error) {
+
+        console.log(error);
+
+    }
+
+}
+
+/* --------------------------
+   Save Usage
+---------------------------*/
+
+document.getElementById("usageForm").addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    const payload = {
+
+        units_consumed: Number(document.getElementById("units_consumed").value),
+
+        rate: Number(document.getElementById("rate").value),
+
+        family_members: Number(document.getElementById("family_members").value),
+
+        house_type: document.getElementById("house_type").value,
+
+        ac_hours: Number(document.getElementById("ac_hours").value),
+
+        fan_hours: Number(document.getElementById("fan_hours").value),
+
+        tv_hours: Number(document.getElementById("tv_hours").value),
+
+        refrigerator: document.getElementById("refrigerator").checked,
+
+        washing_machine: document.getElementById("washing_machine").checked,
+
+        cooler: document.getElementById("cooler").checked,
+
+        other_appliances: document.getElementById("other_appliances").checked
+
+    };
+
+    try {
+
+        const response = await fetch(`${API_BASE}/api/energy/`,{
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify(payload)
+
+        });
+
+        if(response.ok){
+
+            alert("Energy usage saved successfully!");
+
+            loadUsage();
+
+        }
+
+        else{
+
+            alert("Unable to save usage.");
+
+        }
+
+    }
+
+    catch(err){
+
+        console.log(err);
+
+        alert("Server Error");
+
+    }
+
+});
+
+/* --------------------------
+   Reset Form
+---------------------------*/
+
+document.getElementById("resetBtn").addEventListener("click",function(){
+
+    if(confirm("Clear all entered values?")){
+
+        document.getElementById("usageForm").reset();
+
+    }
+
+});
+
+/* --------------------------
+   Initial Load
+---------------------------*/
+
+loadUsage();
+
+</script>
+
+</body>
+
+</html>

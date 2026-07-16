@@ -1,8 +1,12 @@
 from app.core.firebase import db
 
 
-def get_dashboard_data():
-    docs = db.collection("energy_usage").stream()
+def get_dashboard_data(uid):
+    docs = (
+        db.collection("energy_usage")
+        .where("uid", "==", uid)
+        .stream()
+    )
 
     records = [doc.to_dict() for doc in docs]
 

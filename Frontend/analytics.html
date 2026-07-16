@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Energy Analytics | Smart Energy Advisor</title>
+
+<!-- Tailwind -->
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Google Font -->
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+<!-- Font Awesome -->
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Chart.js -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<style>
+
+body{
+font-family:'Inter',sans-serif;
+background:#f8fafc;
+}
+
+.glass-card{
+background:white;
+border-radius:24px;
+border:1px solid #e2e8f0;
+box-shadow:0 10px 30px rgba(0,0,0,.05);
+}
+
+canvas{
+width:100%!important;
+height:320px!important;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="flex min-h-screen">
+
+<!-- Sidebar -->
+
+<aside class="w-64 bg-slate-900 text-white flex flex-col">
+
+<div class="p-6 border-b border-slate-800">
+
+<div class="flex items-center gap-3">
+
+<div class="bg-emerald-500 p-3 rounded-xl">
+
+<i class="fa-solid fa-bolt"></i>
+
+</div>
+
+<div>
+
+<h2 class="font-bold">
+Smart Energy
+</h2>
+
+<p class="text-xs text-slate-400">
+Advisor AI
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<nav class="flex-1 p-4 space-y-2">
+
+<a href="dashboard.html"
+class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+<i class="fa-solid fa-house"></i>
+
+Dashboard
+
+</a>
+
+<a href="usage.html"
+class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+<i class="fa-solid fa-bolt"></i>
+
+Electricity Usage
+
+</a>
+
+<a href="prediction.html"
+class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+<i class="fa-solid fa-chart-line"></i>
+
+Prediction
+
+</a>
+
+<a href="bill.html"
+class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+<i class="fa-solid fa-file-invoice-dollar"></i>
+
+Estimated Bill
+
+</a>
+
+<a href="analytics.html"
+class="flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-600/10 text-emerald-400 border border-emerald-500/20">
+
+<i class="fa-solid fa-chart-pie"></i>
+
+Analytics
+
+</a>
+
+<a href="recommendation.html"
+class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+<i class="fa-solid fa-lightbulb"></i>
+
+Recommendations
+
+</a>
+
+<a href="ai_assistant.html"
+class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+<i class="fa-solid fa-robot"></i>
+
+AI Assistant
+
+</a>
+
+<a href="profile.html"
+class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+<i class="fa-solid fa-user"></i>
+
+Profile
+
+</a>
+
+</nav>
+
+</aside>
+
+<!-- Main Content -->
+
+<main class="flex-1">
+
+<header class="bg-white border-b border-slate-200 px-8 py-5">
+
+<h1 class="text-2xl font-bold flex items-center gap-3">
+
+<i class="fa-solid fa-chart-pie text-emerald-500"></i>
+
+Energy Analytics
+
+</h1>
+
+</header>
+
+<div class="p-8">
+
+<div id="sampleWarning"
+class="hidden bg-yellow-50 border border-yellow-300 rounded-2xl p-5 mb-8">
+
+<h2 class="font-bold text-yellow-700">
+
+<i class="fa-solid fa-triangle-exclamation"></i>
+
+Sample Data
+
+</h2>
+
+<p class="text-sm text-slate-600 mt-2">
+
+Not enough user history found.
+
+Showing demonstration analytics.
+
+</p>
+
+</div>
+
+<!-- Charts Grid -->
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+
+    <!-- Monthly Consumption -->
+
+    <div class="glass-card p-6">
+
+        <h2 class="text-lg font-bold text-slate-800">
+
+            Monthly Electricity Consumption
+
+        </h2>
+
+        <p class="text-sm text-slate-500 mb-5">
+
+            Total energy consumed every month.
+
+        </p>
+
+        <canvas id="consumptionChart"></canvas>
+
+    </div>
+
+    <!-- Monthly Bill -->
+
+    <div class="glass-card p-6">
+
+        <h2 class="text-lg font-bold text-slate-800">
+
+            Monthly Electricity Bill
+
+        </h2>
+
+        <p class="text-sm text-slate-500 mb-5">
+
+            Estimated monthly electricity bill.
+
+        </p>
+
+        <canvas id="billChart"></canvas>
+
+    </div>
+
+</div>
+
+<!-- Second Row -->
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+
+    <!-- Appliance Pie -->
+
+    <div class="glass-card p-6">
+
+        <h2 class="text-lg font-bold text-slate-800">
+
+            Appliance Consumption
+
+        </h2>
+
+        <p class="text-sm text-slate-500 mb-5">
+
+            Power usage distribution.
+
+        </p>
+
+        <canvas id="applianceChart"></canvas>
+
+    </div>
+
+    <!-- Prediction Trend -->
+
+    <div class="glass-card p-6">
+
+        <h2 class="text-lg font-bold text-slate-800">
+
+            Future Prediction Trend
+
+        </h2>
+
+        <p class="text-sm text-slate-500 mb-5">
+
+            Expected electricity usage for the next 3 months.
+
+        </p>
+
+        <canvas id="predictionTrendChart"></canvas>
+
+    </div>
+
+</div>
+
+<!-- Weekly Chart -->
+
+<div class="glass-card p-6">
+
+    <h2 class="text-lg font-bold text-slate-800">
+
+        Weekly Load Distribution
+
+    </h2>
+
+    <p class="text-sm text-slate-500 mb-5">
+
+        Estimated electricity load throughout the week.
+
+    </p>
+
+    <canvas id="weeklyLoadChart"></canvas>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<script>
+
+const API="http://127.0.0.1:8000";
+
+async function loadAnalytics(){
+
+try{
+
+const response=await fetch(`${API}/api/dashboard/`);
+
+const data=await response.json();
+
+const months=[
+"Jan","Feb","Mar","Apr",
+"May","Jun","Jul","Aug",
+"Sep","Oct","Nov","Dec"
+];
+
+let consumption=[
+180,
+200,
+210,
+250,
+260,
+280,
+300,
+290,
+310,
+330,
+340,
+data.latest_consumption
+];
+
+let bills=consumption.map(x=>x*8);
+
+let prediction=[
+data.latest_consumption,
+data.latest_consumption+20,
+data.latest_consumption+35,
+data.latest_consumption+50
+];
+
+createConsumption(months,consumption);
+
+createBills(months,bills);
+
+createPie();
+
+createPrediction(prediction);
+
+createWeekly(data.latest_consumption);
+
+}catch(err){
+
+console.log(err);
+
+document.getElementById("sampleWarning").classList.remove("hidden");
+
+createSampleCharts();
+
+}
+
+}
+function createConsumption(labels,data){
+
+new Chart(document.getElementById("consumptionChart"),{
+
+type:"line",
+
+data:{
+
+labels:labels,
+
+datasets:[{
+
+label:"kWh",
+
+data:data,
+
+borderColor:"#10b981",
+
+backgroundColor:"rgba(16,185,129,.15)",
+
+fill:true,
+
+tension:.4
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:false
+
+}
+
+});
+
+}
+
+function createBills(labels,data){
+
+new Chart(document.getElementById("billChart"),{
+
+type:"bar",
+
+data:{
+
+labels:labels,
+
+datasets:[{
+
+label:"₹",
+
+data:data,
+
+backgroundColor:"#3b82f6"
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:false
+
+}
+
+});
+
+}
+
+function createPie(){
+
+new Chart(document.getElementById("applianceChart"),{
+
+type:"doughnut",
+
+data:{
+
+labels:[
+
+"AC",
+
+"Fans",
+
+"Refrigerator",
+
+"TV",
+
+"Others"
+
+],
+
+datasets:[{
+
+data:[40,20,15,10,15],
+
+backgroundColor:[
+
+"#10b981",
+
+"#3b82f6",
+
+"#f59e0b",
+
+"#8b5cf6",
+
+"#ef4444"
+
+]
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:false
+
+}
+
+});
+
+}
+
+function createPrediction(data){
+
+new Chart(document.getElementById("predictionTrendChart"),{
+
+type:"line",
+
+data:{
+
+labels:[
+
+"Current",
+
+"Next Month",
+
+"+2 Months",
+
+"+3 Months"
+
+],
+
+datasets:[{
+
+label:"Forecast",
+
+data:data,
+
+borderColor:"#8b5cf6",
+
+backgroundColor:"rgba(139,92,246,.15)",
+
+fill:true,
+
+tension:.4
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:false
+
+}
+
+});
+
+}
+
+function createWeekly(latest){
+
+const avg=(latest/7).toFixed(1);
+
+new Chart(document.getElementById("weeklyLoadChart"),{
+
+type:"bar",
+
+data:{
+
+labels:[
+
+"Mon",
+
+"Tue",
+
+"Wed",
+
+"Thu",
+
+"Fri",
+
+"Sat",
+
+"Sun"
+
+],
+
+datasets:[{
+
+label:"kWh",
+
+data:[
+
+avg,
+
+avg*1.05,
+
+avg*.95,
+
+avg*1.02,
+
+avg*1.08,
+
+avg*1.15,
+
+avg*.90
+
+],
+
+backgroundColor:"#10b981"
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:false
+
+}
+
+});
+
+}
+
+function createSampleCharts(){
+
+const months=[
+
+"Jan","Feb","Mar","Apr",
+
+"May","Jun","Jul","Aug",
+
+"Sep","Oct","Nov","Dec"
+
+];
+
+const sample=[
+
+180,
+
+210,
+
+220,
+
+250,
+
+270,
+
+260,
+
+300,
+
+320,
+
+310,
+
+330,
+
+340,
+
+360
+
+];
+
+createConsumption(months,sample);
+
+createBills(months,sample.map(x=>x*8));
+
+createPie();
+
+createPrediction([360,375,390,405]);
+
+createWeekly(360);
+
+}
+
+loadAnalytics();
+
+</script>
+
+</body>
+
+</html>

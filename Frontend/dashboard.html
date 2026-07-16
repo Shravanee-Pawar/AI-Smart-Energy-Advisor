@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Smart Energy Advisor</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body class="bg-slate-50 font-['Inter'] text-slate-800">
+
+<div class="flex min-h-screen">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-slate-900 text-white flex flex-col">
+
+        <div class="p-6 border-b border-slate-800">
+
+            <div class="flex items-center gap-3">
+
+                <div class="bg-emerald-500 p-3 rounded-xl">
+                    <i class="fa-solid fa-bolt text-white"></i>
+                </div>
+
+                <div>
+                    <h2 class="font-bold text-lg">
+                        Smart Energy
+                    </h2>
+
+                    <p class="text-xs text-slate-400">
+                        Advisor AI
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <nav class="flex-1 p-4 space-y-2">
+
+            <a href="dashboard.html"
+                class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-600/10 text-emerald-400 border border-emerald-500/20">
+
+                <i class="fa-solid fa-house"></i>
+
+                Dashboard
+
+            </a>
+
+            <a href="usage.html"
+                class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-bolt"></i>
+
+                Electricity Usage
+
+            </a>
+
+            <a href="prediction.html"
+                class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Predictions
+
+            </a>
+
+            <a href="bill.html"
+                class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+
+                Estimated Bill
+
+            </a>
+
+            <a href="analytics.html"
+                class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-chart-pie"></i>
+
+                Analytics
+
+            </a>
+
+            <a href="ai_assistant.html"
+                class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-robot"></i>
+
+                AI Assistant
+
+            </a>
+
+            <a href="recommendation.html"
+                class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-lightbulb"></i>
+
+                Recommendations
+
+            </a>
+
+            <a href="profile.html"
+                class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800">
+
+                <i class="fa-solid fa-user"></i>
+
+                Profile
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto">
+
+        <!-- Top Header -->
+        <header
+            class="bg-white border-b border-slate-200 px-8 py-5 flex justify-between items-center">
+
+            <h1 class="text-2xl font-bold flex items-center gap-3">
+
+                <i class="fa-solid fa-house text-emerald-500"></i>
+
+                Dashboard
+
+            </h1>
+
+        </header>
+
+        <div class="p-8">
+
+            <!-- Welcome Banner -->
+
+            <div
+                class="relative overflow-hidden bg-slate-900 text-white rounded-3xl p-8 mb-8 border border-slate-800 shadow-xl">
+
+                <div
+                    class="absolute inset-0 bg-[radial-gradient(circle_at_75%_30%,rgba(16,185,129,0.15),rgba(255,255,255,0))]">
+                </div>
+
+                <div class="relative max-w-3xl">
+
+                    <h3 class="text-2xl font-bold">
+
+                        Welcome,
+
+                        <span id="user-name">User</span>!
+
+                    </h3>
+
+                    <p class="text-slate-400 text-sm mt-3">
+
+                        Welcome to your Smart Energy Advisor dashboard.
+
+                        Monitor electricity usage,
+
+                        predict future consumption,
+
+                        estimate bills,
+
+                        and receive AI-powered energy-saving recommendations.
+
+                    </p>
+
+                    <div class="mt-6 flex flex-wrap gap-3">
+
+                        <a href="usage.html"
+                            class="bg-emerald-500 hover:bg-emerald-600 text-white text-sm px-5 py-3 rounded-xl font-semibold">
+
+                            <i class="fa-solid fa-plus mr-2"></i>
+
+                            Log Usage
+
+                        </a>
+
+                        <a href="ai_assistant.html"
+                            class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white text-sm px-5 py-3 rounded-xl font-semibold">
+
+                            <i class="fa-solid fa-robot mr-2"></i>
+
+                            Chat with AI
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Statistics Cards -->
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+                <!-- Current Usage -->
+
+                <div
+                    class="glass-card bg-white p-6 rounded-3xl flex justify-between items-center">
+
+                    <div>
+
+                        <p class="text-xs uppercase text-slate-500 font-bold">
+
+                            Current Usage
+
+                        </p>
+
+                        <h2 class="text-3xl font-black mt-2">
+
+                            <span id="current-units">--</span>
+
+                            <span class="text-sm font-medium">kWh</span>
+
+                        </h2>
+
+                    </div>
+
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-emerald-100 flex items-center justify-center text-emerald-500">
+
+                        <i class="fa-solid fa-bolt text-xl"></i>
+
+                    </div>
+
+                </div>
+
+                <!-- Predicted Usage -->
+
+                <div
+                    class="glass-card bg-white p-6 rounded-3xl flex justify-between items-center">
+
+                    <div>
+
+                        <p class="text-xs uppercase text-slate-500 font-bold">
+
+                            Predicted Usage
+
+                        </p>
+
+                        <h2 class="text-3xl font-black mt-2">
+
+                            <span id="predicted-units">--</span>
+
+                            <span class="text-sm font-medium">kWh</span>
+
+                        </h2>
+
+                    </div>
+
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center text-blue-500">
+
+                        <i class="fa-solid fa-chart-line text-xl"></i>
+
+                    </div>
+
+                </div>
+
+                <!-- Estimated Bill -->
+
+                <div
+                    class="glass-card bg-white p-6 rounded-3xl flex justify-between items-center">
+
+                    <div>
+
+                        <p class="text-xs uppercase text-slate-500 font-bold">
+
+                            Estimated Bill
+
+                        </p>
+
+                        <h2 class="text-3xl font-black mt-2">
+
+                            ₹<span id="predicted-bill">--</span>
+
+                        </h2>
+
+                    </div>
+
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-indigo-100 flex items-center justify-center text-indigo-500">
+
+                        <i class="fa-solid fa-file-invoice-dollar text-xl"></i>
+
+                    </div>
+
+                </div>
+                
+                                <!-- Energy Status -->
+
+                <div
+                    class="glass-card bg-white p-6 rounded-3xl flex justify-between items-center">
+
+                    <div>
+
+                        <p class="text-xs uppercase text-slate-500 font-bold">
+                            Energy Status
+                        </p>
+
+                        <h2 class="text-2xl font-black mt-2">
+                            <span id="energy-status">Loading...</span>
+                        </h2>
+
+                        <span id="status-badge"
+                            class="inline-block mt-3 px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-600">
+
+                            NORMAL
+
+                        </span>
+
+                    </div>
+
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-teal-100 flex items-center justify-center text-teal-500">
+
+                        <i class="fa-solid fa-leaf text-xl"></i>
+
+                    </div>
+
+                </div>
+
+                <!-- Monthly Savings -->
+
+                <div
+                    class="glass-card bg-white p-6 rounded-3xl flex justify-between items-center">
+
+                    <div>
+
+                        <p class="text-xs uppercase text-slate-500 font-bold">
+                            Monthly Savings
+                        </p>
+
+                        <h2 class="text-3xl font-black mt-2">
+
+                            ₹<span id="monthly-saving">--</span>
+
+                        </h2>
+
+                        <p class="text-xs text-slate-400 mt-2">
+                            Estimated savings this month
+                        </p>
+
+                    </div>
+
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center text-amber-500">
+
+                        <i class="fa-solid fa-piggy-bank text-xl"></i>
+
+                    </div>
+
+                </div>
+
+                <!-- Carbon Footprint -->
+
+                <div
+                    class="glass-card bg-white p-6 rounded-3xl flex justify-between items-center">
+
+                    <div>
+
+                        <p class="text-xs uppercase text-slate-500 font-bold">
+                            Carbon Footprint
+                        </p>
+
+                        <h2 class="text-3xl font-black mt-2">
+
+                            <span id="carbon-footprint">--</span>
+
+                            <span class="text-sm font-medium">
+                                lbs CO₂
+                            </span>
+
+                        </h2>
+
+                        <p class="text-xs text-slate-400 mt-2">
+                            Estimated emissions
+                        </p>
+
+                    </div>
+
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-rose-100 flex items-center justify-center text-rose-500">
+
+                        <i class="fa-solid fa-cloud text-xl"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Quick Actions -->
+
+            <div class="mt-12">
+
+                <h2 class="text-xl font-bold text-slate-800 mb-6">
+                    Quick Actions
+                </h2>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                    <a href="usage.html"
+                        class="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-lg transition">
+
+                        <div
+                            class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
+
+                            <i class="fa-solid fa-file-pen text-emerald-600"></i>
+
+                        </div>
+
+                        <h3 class="font-bold text-slate-800">
+                            Enter Usage
+                        </h3>
+
+                        <p class="text-sm text-slate-500 mt-2">
+                            Add your monthly electricity consumption.
+                        </p>
+
+                    </a>
+
+                    <a href="prediction.html"
+                        class="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-lg transition">
+
+                        <div
+                            class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+
+                            <i class="fa-solid fa-chart-line text-blue-600"></i>
+
+                        </div>
+
+                        <h3 class="font-bold text-slate-800">
+                            Prediction
+                        </h3>
+
+                        <p class="text-sm text-slate-500 mt-2">
+                            Predict next month's energy usage.
+                        </p>
+
+                    </a>
+
+                    <a href="recommendation.html"
+                        class="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-lg transition">
+
+                        <div
+                            class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center mb-4">
+
+                            <i class="fa-solid fa-lightbulb text-indigo-600"></i>
+
+                        </div>
+
+                        <h3 class="font-bold text-slate-800">
+                            Recommendations
+                        </h3>
+
+                        <p class="text-sm text-slate-500 mt-2">
+                            Get AI-powered energy-saving tips.
+                        </p>
+
+                    </a>
+
+                    <a href="ai_assistant.html"
+                        class="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-lg transition">
+
+                        <div
+                            class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center mb-4">
+
+                            <i class="fa-solid fa-robot text-teal-600"></i>
+
+                        </div>
+
+                        <h3 class="font-bold text-slate-800">
+                            AI Assistant
+                        </h3>
+
+                        <p class="text-sm text-slate-500 mt-2">
+                            Ask questions about your electricity usage.
+                        </p>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+                        <!-- End of Main Content -->
+        </div>
+    </main>
+</div>
+
+<!-- Dashboard Script -->
+<script>
+const API_BASE = "http://127.0.0.1:8000";
+
+async function loadDashboard() {
+
+    try {
+
+        const uid = localStorage.getItem("uid");
+
+
+        const response = await fetch(
+            `${API_BASE}/api/dashboard/?uid=${uid}`
+        );
+
+        const data = await response.json();
+
+        document.getElementById("current-units").textContent =
+            data.latest_consumption;
+
+        document.getElementById("predicted-bill").textContent =
+            data.estimated_bill;
+
+        // Prediction not available from dashboard API
+        document.getElementById("predicted-units").textContent =
+            "--";
+
+        // Carbon Footprint
+        const carbon = (data.latest_consumption * 0.85).toFixed(2);
+
+        document.getElementById("carbon-footprint").textContent =
+            carbon;
+
+        // Savings
+
+        const saving = (2500 - data.estimated_bill);
+
+        document.getElementById("monthly-saving").textContent =
+            saving > 0 ? saving : 0;
+
+        // Status
+
+        let status = "Excellent";
+
+        if (data.latest_consumption > 600)
+            status = "High";
+
+        else if (data.latest_consumption > 400)
+            status = "Average";
+
+        else if (data.latest_consumption > 250)
+            status = "Good";
+
+        document.getElementById("energy-status").textContent =
+            status;
+
+        document.getElementById("status-badge").textContent =
+            status;
+
+    }
+
+    catch (err) {
+
+        console.error(err);
+
+    }
+
+}
+
+loadDashboard();
+</script>
+
+</body>
+</html>

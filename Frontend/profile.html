@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>User Profile | Smart Energy Advisor</title>
+
+
+<!-- Tailwind CSS -->
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+
+<!-- Font Awesome -->
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+<!-- Google Font -->
+
+<link
+href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+
+
+<style>
+
+
+body{
+
+font-family:'Inter',sans-serif;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+
+
+
+<body class="bg-gray-100">
+
+
+
+
+
+
+<div class="flex min-h-screen">
+
+
+
+
+
+
+<!-- ================= SIDEBAR ================= -->
+
+
+<aside class="w-64 bg-gray-900 text-white hidden md:block">
+
+
+
+<div class="p-6">
+
+
+<h1 class="text-xl font-bold text-emerald-400">
+
+
+<i class="fa-solid fa-bolt"></i>
+
+Smart Energy Advisor
+
+
+</h1>
+
+
+
+<p class="text-gray-400 text-sm mt-2">
+
+AI Powered Energy Management
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+<nav class="px-4 space-y-2">
+
+
+
+
+
+<a href="dashboard.html"
+
+class="block px-4 py-3 rounded-lg hover:bg-emerald-800">
+
+
+<i class="fa-solid fa-chart-line mr-3"></i>
+
+Dashboard
+
+
+</a>
+
+
+
+
+
+<a href="usage.html"
+
+class="block px-4 py-3 rounded-lg hover:bg-emerald-800">
+
+
+<i class="fa-solid fa-plug mr-3"></i>
+
+Energy Usage
+
+
+</a>
+
+
+
+
+
+<a href="prediction.html"
+
+class="block px-4 py-3 rounded-lg hover:bg-emerald-800">
+
+
+<i class="fa-solid fa-brain mr-3"></i>
+
+Prediction
+
+
+</a>
+
+
+
+
+
+<a href="bill.html"
+
+class="block px-4 py-3 rounded-lg hover:bg-emerald-800">
+
+
+<i class="fa-solid fa-file-invoice-dollar mr-3"></i>
+
+Bill
+
+
+</a>
+
+
+
+
+
+<a href="analytics.html"
+
+class="block px-4 py-3 rounded-lg hover:bg-emerald-800">
+
+
+<i class="fa-solid fa-chart-pie mr-3"></i>
+
+Analytics
+
+
+</a>
+
+
+
+
+
+<a href="ai_assistant.html"
+
+class="block px-4 py-3 rounded-lg hover:bg-emerald-800">
+
+
+<i class="fa-solid fa-robot mr-3"></i>
+
+AI Assistant
+
+
+</a>
+
+
+
+
+
+<a href="recommendations.html"
+
+class="block px-4 py-3 rounded-lg hover:bg-emerald-800">
+
+
+<i class="fa-solid fa-lightbulb mr-3"></i>
+
+Recommendations
+
+
+</a>
+
+
+
+
+
+
+<a href="profile.html"
+
+class="block bg-emerald-700 px-4 py-3 rounded-lg">
+
+
+<i class="fa-solid fa-user mr-3"></i>
+
+Profile
+
+
+</a>
+
+
+
+
+
+</nav>
+
+
+</aside>
+
+
+
+
+
+
+
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+
+
+<main class="flex-1">
+
+
+
+
+
+<!-- HEADER -->
+
+
+<header class="bg-white shadow px-6 py-4">
+
+
+<h2 class="text-2xl font-bold text-gray-800">
+
+
+<i class="fa-solid fa-user text-emerald-500"></i>
+
+
+User Profile
+
+
+</h2>
+
+
+
+<p class="text-gray-500 text-sm">
+
+Manage your account details and security
+
+
+</p>
+
+
+
+</header>
+
+
+
+
+
+
+
+
+<section class="p-6">
+
+
+
+<div class="max-w-4xl mx-auto">
+
+
+
+
+
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+
+
+
+
+
+
+<!-- PROFILE SUMMARY CARD -->
+
+
+<div class="bg-white rounded-3xl border p-6 text-center shadow-sm h-fit">
+
+
+
+
+
+<div id="profile-avatar"
+
+class="w-20 h-20 bg-emerald-100 text-emerald-500 text-3xl font-black rounded-full flex items-center justify-center mx-auto mb-4">
+
+
+U
+
+
+</div>
+
+
+
+
+
+
+<h3 id="profile-name"
+
+class="font-extrabold text-lg text-gray-800">
+
+
+Loading...
+
+
+</h3>
+
+
+
+
+
+
+<p id="profile-email"
+
+class="text-xs text-gray-400 mt-1 truncate">
+
+
+Loading...
+
+
+</p>
+
+
+
+
+
+
+
+<span class="inline-block mt-4 px-3 py-1 bg-emerald-100 text-emerald-600 rounded-full text-xs font-bold">
+
+
+Active Member
+
+
+</span>
+
+
+
+
+
+
+<div class="border-t my-6"></div>
+
+
+
+
+
+
+
+<div class="text-left">
+
+
+<p class="text-xs font-bold text-gray-400 uppercase">
+
+
+Member Since
+
+
+</p>
+
+
+
+<p id="created-date"
+
+class="text-sm text-gray-600 mt-2">
+
+
+Loading...
+
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- RIGHT SECTION -->
+
+
+<div class="md:col-span-2 space-y-8">
+
+
+
+
+
+
+
+<!-- ACCOUNT INFORMATION -->
+
+
+<div class="bg-white rounded-3xl border p-6 shadow-sm">
+
+
+
+<h4 class="font-bold text-gray-800 mb-6">
+
+
+Account Information
+
+
+</h4>
+
+
+
+
+
+
+<form id="profile-form"
+
+class="space-y-5">
+
+
+
+
+
+
+
+<div>
+
+
+<label class="block text-xs font-bold text-gray-500 uppercase mb-2">
+
+
+Full Name
+
+
+</label>
+
+
+
+
+<div class="relative">
+
+
+<span class="absolute left-3 top-3 text-gray-400">
+
+
+<i class="fa-solid fa-user"></i>
+
+
+</span>
+
+
+
+<input
+
+id="name"
+
+type="text"
+
+class="w-full pl-10 px-4 py-3 rounded-2xl border bg-gray-50 focus:ring-2 focus:ring-emerald-500 outline-none"
+
+required>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div>
+
+
+<label class="block text-xs font-bold text-gray-500 uppercase mb-2">
+
+
+Email Address
+
+
+</label>
+
+
+
+
+<div class="relative">
+
+
+<span class="absolute left-3 top-3 text-gray-400">
+
+
+<i class="fa-solid fa-envelope"></i>
+
+
+</span>
+
+
+
+
+<input
+
+id="email"
+
+type="email"
+
+class="w-full pl-10 px-4 py-3 rounded-2xl border bg-gray-50 focus:ring-2 focus:ring-emerald-500 outline-none"
+
+required>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="flex justify-end">
+
+
+<button
+
+type="submit"
+
+class="bg-emerald-500 text-white px-6 py-3 rounded-2xl text-sm font-semibold">
+
+
+Update Profile
+
+<i class="fa-solid fa-circle-check ml-2"></i>
+
+
+</button>
+
+
+</div>
+
+
+
+
+
+</form>
+
+
+
+
+
+
+</div>
+<!-- ================= CHANGE PASSWORD ================= -->
+
+
+<div class="bg-white rounded-3xl border p-6 shadow-sm">
+
+
+<h4 class="font-bold text-gray-800 mb-6">
+
+
+Change Account Password
+
+
+</h4>
+
+
+
+
+
+<form id="password-form"
+
+class="space-y-5">
+
+
+
+
+
+
+
+
+<!-- CURRENT PASSWORD -->
+
+
+<div>
+
+
+<label class="block text-xs font-bold text-gray-500 uppercase mb-2">
+
+Current Password
+
+</label>
+
+
+
+
+<div class="relative">
+
+
+<span class="absolute left-3 top-3 text-gray-400">
+
+<i class="fa-solid fa-lock"></i>
+
+</span>
+
+
+
+<input
+
+id="current_password"
+
+type="password"
+
+placeholder="••••••••"
+
+class="w-full pl-10 pr-12 px-4 py-3 rounded-2xl border bg-gray-50 focus:ring-2 focus:ring-emerald-500 outline-none"
+
+required>
+
+
+
+
+
+<button
+
+type="button"
+
+onclick="togglePassword('current_password',this)"
+
+class="absolute right-3 top-3 text-gray-400">
+
+
+<i class="fa-solid fa-eye"></i>
+
+
+</button>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- NEW PASSWORD -->
+
+
+<div>
+
+
+<label class="block text-xs font-bold text-gray-500 uppercase mb-2">
+
+New Password
+
+</label>
+
+
+
+
+<div class="relative">
+
+
+<span class="absolute left-3 top-3 text-gray-400">
+
+<i class="fa-solid fa-key"></i>
+
+</span>
+
+
+
+
+
+<input
+
+id="new_password"
+
+type="password"
+
+placeholder="••••••••"
+
+class="w-full pl-10 pr-12 px-4 py-3 rounded-2xl border bg-gray-50 focus:ring-2 focus:ring-emerald-500 outline-none"
+
+required>
+
+
+
+
+
+
+<button
+
+type="button"
+
+onclick="togglePassword('new_password',this)"
+
+class="absolute right-3 top-3 text-gray-400">
+
+
+<i class="fa-solid fa-eye"></i>
+
+
+</button>
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- CONFIRM PASSWORD -->
+
+
+<div>
+
+
+<label class="block text-xs font-bold text-gray-500 uppercase mb-2">
+
+Confirm New Password
+
+</label>
+
+
+
+
+
+<div class="relative">
+
+
+<span class="absolute left-3 top-3 text-gray-400">
+
+<i class="fa-solid fa-circle-check"></i>
+
+</span>
+
+
+
+
+
+<input
+
+id="confirm_password"
+
+type="password"
+
+placeholder="••••••••"
+
+class="w-full pl-10 pr-12 px-4 py-3 rounded-2xl border bg-gray-50 focus:ring-2 focus:ring-emerald-500 outline-none"
+
+required>
+
+
+
+
+
+<button
+
+type="button"
+
+onclick="togglePassword('confirm_password',this)"
+
+class="absolute right-3 top-3 text-gray-400">
+
+
+<i class="fa-solid fa-eye"></i>
+
+
+</button>
+
+
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- ERROR MESSAGE -->
+
+
+<div id="password-error"
+
+class="hidden bg-red-50 border border-red-200 text-red-600 p-3 rounded-xl text-sm">
+
+
+<i class="fa-solid fa-triangle-exclamation mr-2"></i>
+
+
+<span id="password-error-text"></span>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="flex justify-end">
+
+
+<button
+
+type="submit"
+
+class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-2xl text-sm font-semibold">
+
+
+Update Password
+
+
+<i class="fa-solid fa-key ml-2"></i>
+
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+</form>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+</main>
+
+
+</div>
+
+
+
+
+
+
+
+
+<script>
+
+
+const API_URL = "http://127.0.0.1:8000";
+
+
+
+
+// Temporary Firebase user ID
+// Replace after login token integration
+
+const USER_ID = localStorage.getItem("uid") || "demo-user";
+
+
+
+
+
+
+
+// ============================
+// LOAD PROFILE
+// ============================
+
+
+async function loadProfile(){
+
+
+try{
+
+
+const response = await fetch(
+
+`${API_URL}/api/profile/${USER_ID}`
+
+);
+
+
+
+const data = await response.json();
+
+
+
+
+
+
+
+document.getElementById("profile-name").innerText =
+
+data.name || "Energy User";
+
+
+
+
+
+document.getElementById("profile-email").innerText =
+
+data.email || "user@email.com";
+
+
+
+
+
+document.getElementById("name").value =
+
+data.name || "";
+
+
+
+
+
+document.getElementById("email").value =
+
+data.email || "";
+
+
+
+
+
+
+
+document.getElementById("profile-avatar").innerText =
+
+(data.name || "U")
+
+.charAt(0)
+
+.toUpperCase();
+
+
+
+
+
+
+
+document.getElementById("created-date").innerText =
+
+data.created_at ?
+
+data.created_at.substring(0,10)
+
+:
+
+"Recently";
+
+
+
+
+
+}
+
+
+
+catch(error){
+
+
+console.error(
+
+"Profile loading error:",
+
+error
+
+);
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ============================
+// UPDATE PROFILE
+// ============================
+
+
+document.getElementById("profile-form")
+
+.addEventListener(
+
+"submit",
+
+async function(e){
+
+
+
+e.preventDefault();
+
+
+
+
+
+const payload={
+
+
+name:
+
+document.getElementById("name").value,
+
+
+email:
+
+document.getElementById("email").value
+
+
+
+};
+
+
+
+
+
+
+try{
+
+
+await fetch(
+
+`${API_URL}/api/profile/${USER_ID}`,
+
+{
+
+
+method:"PUT",
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+
+},
+
+
+body:JSON.stringify(payload)
+
+
+
+}
+
+);
+
+
+
+
+
+alert(
+
+"Profile updated successfully"
+
+);
+
+
+
+loadProfile();
+
+
+
+}
+
+catch(error){
+
+
+alert(
+
+"Profile update failed"
+
+);
+
+
+}
+
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+
+// ============================
+// CHANGE PASSWORD
+// ============================
+
+
+document.getElementById("password-form")
+
+.addEventListener(
+
+"submit",
+
+async function(e){
+
+
+
+e.preventDefault();
+
+
+
+
+
+let newPassword =
+
+document.getElementById("new_password").value;
+
+
+
+let confirmPassword =
+
+document.getElementById("confirm_password").value;
+
+
+
+
+
+
+
+if(newPassword !== confirmPassword){
+
+
+
+showPasswordError(
+
+"Passwords do not match"
+
+);
+
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+try{
+
+
+
+await fetch(
+
+`${API_URL}/api/auth/change-password`,
+
+{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+
+},
+
+
+body:JSON.stringify({
+
+
+
+uid:USER_ID,
+
+
+password:newPassword
+
+
+
+})
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+alert(
+
+"Password updated successfully"
+
+);
+
+
+
+document.getElementById("password-form").reset();
+
+
+
+}
+
+
+
+catch(error){
+
+
+
+showPasswordError(
+
+"Password update failed"
+
+);
+
+
+
+}
+
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+
+// ============================
+// PASSWORD TOGGLE
+// ============================
+
+
+function togglePassword(id,button){
+
+
+
+const input = document.getElementById(id);
+
+
+
+if(input.type==="password"){
+
+
+input.type="text";
+
+
+button.innerHTML =
+
+'<i class="fa-solid fa-eye-slash"></i>';
+
+
+
+}
+
+else{
+
+
+input.type="password";
+
+
+button.innerHTML =
+
+'<i class="fa-solid fa-eye"></i>';
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function showPasswordError(message){
+
+
+
+const box=document.getElementById(
+
+"password-error"
+
+);
+
+
+
+document.getElementById(
+
+"password-error-text"
+
+)
+
+.innerText=message;
+
+
+
+box.classList.remove("hidden");
+
+
+}
+
+
+
+
+
+
+
+
+window.onload=function(){
+
+
+loadProfile();
+
+
+};
+
+
+
+</script>
+
+
+
+
+
+
+</body>
+
+</html>

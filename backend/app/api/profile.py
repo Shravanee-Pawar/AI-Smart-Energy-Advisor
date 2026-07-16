@@ -1,4 +1,6 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+
+from app.core.security import verify_firebase_token
 
 from app.schemas.profile import (
     ProfileResponse,
@@ -12,8 +14,11 @@ from app.services.profile_service import (
 router = APIRouter()
 
 
-@router.get("/{uid}", response_model=ProfileResponse)
-def read_profile(uid: str):
+@router.get("/", response_model=ProfileResponse)
+def read_profile(
+    current_user: dict = Depends(verify_firebase_token),
+):
+    uid = current_user["uid"]
     profile = get_profile(uid)
 
     if profile is None:

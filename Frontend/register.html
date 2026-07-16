@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Energy Advisor - Register</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link
+        rel="stylesheet"
+        href="../static/css/style.css">
+
+</head>
+
+<body class="bg-slate-50 font-['Inter'] text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 border-b border-slate-200 z-40 px-6 py-4 flex items-center justify-between">
+
+        <a href="landing.html"
+           class="flex items-center gap-2.5">
+
+            <div class="bg-emerald-500 text-white p-2 rounded-xl flex items-center justify-center">
+                <i class="fa-solid fa-bolt"></i>
+            </div>
+
+            <span class="font-bold text-slate-900 text-lg tracking-tight">
+                Smart Energy Advisor
+            </span>
+
+        </a>
+
+        <div class="flex items-center gap-3">
+
+            <a href="login.html"
+               class="text-sm font-semibold text-slate-600 hover:text-emerald-600 px-4 py-2 rounded-lg transition-colors">
+
+                Log In
+
+            </a>
+
+            <a href="register.html"
+               class="bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all shadow-md shadow-emerald-500/25">
+
+                Register
+
+            </a>
+
+        </div>
+
+    </nav>
+
+    <!-- Main Section -->
+
+    <section class="flex-1 bg-slate-50 flex items-center justify-center py-20 px-6 relative overflow-hidden">
+
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_-10%,rgba(16,185,129,0.08),rgba(255,255,255,0))]"></div>
+
+        <div class="relative w-full max-w-md bg-white p-8 sm:p-10 rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/50 flex flex-col">
+
+            <!-- Header -->
+
+            <div class="text-center mb-8">
+
+                <h2 class="text-2xl font-black text-slate-900 tracking-tight">
+
+                    Create an Account
+
+                </h2>
+
+                <p class="text-slate-500 text-sm mt-1">
+
+                    Start tracking and optimizing your home energy usage.
+
+                </p>
+
+            </div>
+
+            <!-- Registration Form -->
+
+            <form id="registerForm"
+                  class="space-y-5">
+
+                <!-- Full Name -->
+
+                <div>
+
+                    <label
+                        for="name"
+                        class="block text-xs font-bold uppercase text-slate-500 tracking-wider mb-2">
+
+                        Full Name
+
+                    </label>
+
+                    <div class="relative">
+
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+
+                            <i class="fa-solid fa-user"></i>
+
+                        </span>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="John Doe"
+                            required
+                            class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-sm text-slate-700 bg-slate-50/50">
+
+                    </div>
+
+                </div>
+
+                <!-- Email -->
+
+                <div>
+
+                    <label
+                        for="email"
+                        class="block text-xs font-bold uppercase text-slate-500 tracking-wider mb-2">
+
+                        Email Address
+
+                    </label>
+
+                    <div class="relative">
+
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+
+                            <i class="fa-solid fa-envelope"></i>
+
+                        </span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="john@example.com"
+                            required
+                            class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-sm text-slate-700 bg-slate-50/50">
+
+                    </div>
+
+                </div>
+
+                          <!-- Password -->
+
+                <div>
+
+                    <label
+                        for="password"
+                        class="block text-xs font-bold uppercase text-slate-500 tracking-wider mb-2">
+
+                        Password
+
+                    </label>
+
+                    <div class="relative">
+
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                        </span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="••••••••"
+                            required
+                            class="w-full pl-10 pr-10 py-3 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-sm text-slate-700 bg-slate-50/50">
+
+                        <button
+                            type="button"
+                            onclick="togglePassword('password', this)"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+
+                            <i class="fa-solid fa-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                    <p class="text-[10px] text-slate-400 mt-1 leading-normal">
+
+                        Must contain at least 8 characters, one uppercase letter, one number and one special character.
+
+                    </p>
+
+                </div>
+
+                
+                <!-- Phone Number -->
+
+<div>
+
+<label
+for="phone"
+class="block text-xs font-bold uppercase text-slate-500 tracking-wider mb-2">
+
+Phone Number
+
+</label>
+
+
+<div class="relative">
+
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+
+<i class="fa-solid fa-phone"></i>
+
+</span>
+
+
+<input
+type="tel"
+id="phone"
+placeholder="9876543210"
+required
+class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-sm text-slate-700 bg-slate-50/50">
+
+</div>
+
+</div>
+
+                <!-- Confirm Password -->
+
+                <div>
+
+                    <label
+                        for="confirm_password"
+                        class="block text-xs font-bold uppercase text-slate-500 tracking-wider mb-2">
+
+                        Confirm Password
+
+                    </label>
+
+                    <div class="relative">
+
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                        </span>
+
+                        <input
+                            type="password"
+                            id="confirm_password"
+                            placeholder="••••••••"
+                            required
+                            class="w-full pl-10 pr-10 py-3 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-sm text-slate-700 bg-slate-50/50">
+
+                        <button
+                            type="button"
+                            onclick="togglePassword('confirm_password', this)"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+
+                            <i class="fa-solid fa-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- Error Message -->
+
+                <div
+                    id="form-error-card"
+                    class="hidden flex items-center gap-2.5 bg-rose-50 border border-rose-100 text-rose-600 text-xs p-3 rounded-xl">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    <span id="form-error-text"></span>
+
+                </div>
+
+                <!-- Register Button -->
+
+                <button
+                    type="submit"
+                    class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3.5 rounded-2xl transition-all shadow-lg shadow-emerald-500/25 text-sm flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
+
+                    Register Account
+
+                    <i class="fa-solid fa-user-plus"></i>
+
+                </button>
+
+            </form>
+
+            <!-- Login Link -->
+
+            <div class="mt-8 text-center text-sm text-slate-500">
+
+                Already have an account?
+
+                <a
+                    href="login.html"
+                    class="font-bold text-emerald-600 hover:text-emerald-700 hover:underline">
+
+                    Log In
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+
+    <footer class="bg-slate-900 border-t border-slate-800 text-slate-400 py-10 px-6">
+
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+
+            <div class="flex items-center gap-3">
+
+                <div class="bg-emerald-500 text-white p-2 rounded-xl">
+
+                    <i class="fa-solid fa-bolt"></i>
+
+                </div>
+
+                <div>
+
+                    <h2 class="text-white font-bold">
+
+                        Smart Energy Advisor
+
+                    </h2>
+
+                    <p class="text-xs text-slate-500">
+
+                        AI Powered Energy Monitoring
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="text-center md:text-right">
+
+                <p class="text-xs">
+
+                    © 2026 Smart Energy Advisor
+
+                </p>
+
+                <p class="text-xs text-slate-500 mt-1">
+
+                    Built with FastAPI • Firebase • Tailwind CSS • Gemini AI
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+    
+        <!-- Main JavaScript -->
+    <script src="../static/js/main.js"></script>
+
+    <script>
+
+        const API_URL = "http://127.0.0.1:8000";
+
+        // -----------------------------
+        // Register Form
+        // -----------------------------
+
+        document
+            .getElementById("registerForm")
+            .addEventListener("submit", registerUser);
+
+        async function registerUser(event) {
+
+            event.preventDefault();
+
+            hideError();
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            const phone = document.getElementById("phone").value.trim();
+            const confirmPassword = document.getElementById("confirm_password").value;
+
+          if (
+    name === "" ||
+    email === "" ||
+    password === "" ||
+    confirmPassword === "" ||
+    phone === ""
+){
+
+                showError("Please fill all fields.");
+
+                return;
+
+            }
+
+            if (password !== confirmPassword) {
+
+                showError("Passwords do not match.");
+
+                return;
+
+            }
+
+            if (password.length < 8) {
+
+                showError("Password must contain at least 8 characters.");
+
+                return;
+
+            }
+
+            try {
+
+                const response = await fetch(API_URL + "/api/register", {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type": "application/json"
+
+                    },
+
+                   body: JSON.stringify({
+
+                        name: name,
+                        email: email,
+                        password: password,
+                        phone: phone
+
+                    })
+
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+
+                    alert("Registration Successful!");
+
+                    window.location.href = "login.html";
+
+                }
+
+                else {
+
+                    showError(data.detail || "Registration failed.");
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.error(error);
+
+                showError("Unable to connect to the server.");
+
+            }
+
+        }
+
+        // -----------------------------
+        // Error Card
+        // -----------------------------
+
+        function showError(message) {
+
+            const card = document.getElementById("form-error-card");
+            const text = document.getElementById("form-error-text");
+
+            text.innerText = message;
+
+            card.classList.remove("hidden");
+
+        }
+
+        function hideError() {
+
+            document
+                .getElementById("form-error-card")
+                .classList.add("hidden");
+
+        }
+
+        // -----------------------------
+        // Password Toggle
+        // -----------------------------
+
+        function togglePassword(id, button) {
+
+            const input = document.getElementById(id);
+
+            const icon = button.querySelector("i");
+
+            if (input.type === "password") {
+
+                input.type = "text";
+
+                icon.classList.remove("fa-eye");
+
+                icon.classList.add("fa-eye-slash");
+
+            }
+
+            else {
+
+                input.type = "password";
+
+                icon.classList.remove("fa-eye-slash");
+
+                icon.classList.add("fa-eye");
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
