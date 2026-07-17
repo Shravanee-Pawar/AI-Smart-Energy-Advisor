@@ -878,466 +878,278 @@ Get AI Saving Recommendations
 
 
 </section>
-
-
-
-
 </main>
-
 
 </div>
 
-
-
-
-
-
-
-
 <script>
 
-
 const API_URL = "http://127.0.0.1:8000";
-
-
-
-
 
 // ============================
 // LOAD BILL DATA
 // ============================
 
+async function loadBill() {
 
-async function loadBill(){
+    try {
 
+        // ----------------------------
+        // STEP 1 : Get Logged-in User
+        // ----------------------------
 
-try{
+        const uid = localStorage.getItem("uid");
 
+        if (!uid) {
+            alert("User not logged in.");
+            return;
+        }
 
+        // ----------------------------
+        // STEP 2 : Dashboard API
+        // ----------------------------
 
-// Dashboard API
+        const dashboardResponse = await fetch(
+            `${API_URL}/api/dashboard/?uid=${uid}`
+        );
 
+        if (!dashboardResponse.ok) {
+            throw new Error("Dashboard API failed");
+        }
 
-const dashboardResponse = await fetch(
+        const dashboardData = await dashboardResponse.json();
 
-`${API_URL}/api/dashboard/`
+        // ----------------------------
+        // STEP 3 : Energy History
+        // ----------------------------
 
-);
+        const historyResponse = await fetch(
+            `${API_URL}/api/energy/${uid}`
+        );
 
+        if (!historyResponse.ok) {
+            throw new Error("Unable to fetch energy history");
+        }
 
+        const history = await historyResponse.json();
 
-if(!dashboardResponse.ok){
+        if (history.length < 2) {
+            alert("At least two energy records are required.");
+            return;
+        }
 
-throw new Error("Dashboard API failed");
+        // ----------------------------
+        // STEP 4 : Sort Months
+        // ----------------------------
+
+        const monthOrder = {
+
+            January: 1,
+            February: 2,
+            March: 3,
+            April: 4,
+            May: 5,
+            June: 6,
+            July: 7,
+            August: 8,
+            September: 9,
+            October: 10,
+            November: 11,
+            December: 12
+
+        };
+
+        history.sort(
+            (a, b) =>
+                monthOrder[a.month] -
+                monthOrder[b.month]
+        );
+
+        // ----------------------------
+        // STEP 5 : Create ML Features
+        // ----------------------------
+
+        const latest = history[history.length - 1];
+        const previous = history[history.length - 2];
+
+        const lastThree = history.slice(-3);
+
+        const totalUnits = lastThree.reduce(
+            (sum, item) => sum + item.units,
+            0
+        );
+
+        const rollingMean =
+            totalUnits / lastThree.length;
+
+        const today = new Date();
+
+        const payload = {
+
+            Year: today.getFullYear(),
+
+            Month: today.getMonth() + 2,
+
+            lag_1: latest.units,
+
+            lag_2: previous.units,
+
+            rolling_mean_3:
+                Number(rollingMean.toFixed(2))
+
+        };
+
+        console.log("Prediction Payload:", payload);
+
+        // ----------------------------
+        // STEP 6 : Prediction API
+        // ----------------------------
+
+        const predictionResponse = await fetch(
+            `${API_URL}/api/prediction/`,
+            {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(payload)
+
+            }
+        );
+
+        if (!predictionResponse.ok) {
+            throw new Error("Prediction API failed");
+        }
+
+        const predictionData =
+            await predictionResponse.json();
+
+        // ----------------------------
+        // STEP 7 : Bill Calculation
+        // ----------------------------
+
+        const units =
+            Number(predictionData.predicted_units);
+
+        const rate = 8;
+
+        const energyCharge =
+            units * rate;
+
+        const fixedCharge = 150;
+
+        const gst =
+            (energyCharge + fixedCharge) * 0.18;
+
+        const total =
+            energyCharge +
+            fixedCharge +
+            gst;
+
+        // ----------------------------
+        // STEP 8 : Display Bill
+        // ----------------------------
+
+        document.getElementById("unitsConsumed").innerText =
+            units.toFixed(2) + " kWh";
+
+        document.getElementById("unitRate").innerText =
+            "₹" + rate;
+
+        document.getElementById("energyCharge").innerText =
+            "₹" + energyCharge.toFixed(2);
+
+        document.getElementById("fixedCharge").innerText =
+            "₹" + fixedCharge.toFixed(2);
+
+        document.getElementById("gstAmount").innerText =
+            "₹" + gst.toFixed(2);
+
+        document.getElementById("summaryEnergyCharge").innerText =
+            "₹" + energyCharge.toFixed(2);
+
+        document.getElementById("summaryFixedCharge").innerText =
+            "₹" + fixedCharge.toFixed(2);
+
+        document.getElementById("summaryGST").innerText =
+            "₹" + gst.toFixed(2);
+
+        document.getElementById("totalAmount").innerText =
+            "₹" + total.toFixed(2);
+
+        // ----------------------------
+        // STEP 9 : Invoice Details
+        // ----------------------------
+
+        document.getElementById("invoiceDate").innerText =
+            new Date().toLocaleDateString();
+
+        document.getElementById("predictionDate").innerText =
+            new Date().toLocaleDateString();
+
+        document.getElementById("billingMonth").innerText =
+            new Date().toLocaleString(
+                "default",
+                {
+                    month: "long",
+                    year: "numeric"
+                }
+            );
+
+        // User name (fallback since dashboard doesn't return it)
+        document.getElementById("customerName").innerText =
+            localStorage.getItem("username") ||
+            dashboardData.user_name ||
+            "Energy User";
+
+        document.getElementById("accountId").innerText =
+            "SEA-" + uid.substring(0, 8).toUpperCase();
+
+    }
+
+    catch (error) {
+
+        console.error("Bill Error:", error);
+
+        alert(error.message);
+
+        document.getElementById("totalAmount").innerText =
+            "Unable to calculate";
+
+    }
+
+    finally {
+
+        document.getElementById("loadingScreen").style.display = "none";
+
+    }
 
 }
-
-
-
-const dashboardData = await dashboardResponse.json();
-
-
-
-
-
-
-
-// Prediction API
-
-
-const predictionPayload = {
-
-
-year:2026,
-
-
-month:new Date().getMonth()+1,
-
-
-lag_1:497.09,
-
-
-lag_2:595.35,
-
-
-rolling_mean_3:608.64
-
-
-};
-
-
-
-
-
-
-const predictionResponse = await fetch(
-
-`${API_URL}/api/prediction/`,
-
-{
-
-method:"POST",
-
-headers:{
-
-"Content-Type":"application/json"
-
-},
-
-body:JSON.stringify(predictionPayload)
-
-
-}
-
-);
-
-
-
-
-
-
-if(!predictionResponse.ok){
-
-throw new Error("Prediction API failed");
-
-}
-
-
-
-
-
-const predictionData = await predictionResponse.json();
-
-
-
-
-
-
-
-// ============================
-// BILL CALCULATION
-// ============================
-
-
-
-let units = Number(
-
-predictionData.predicted_units ||
-
-dashboardData.latest_consumption ||
-
-0
-
-);
-
-
-
-
-let rate = 8;
-
-
-
-
-let energyCharge = units * rate;
-
-
-
-let fixedCharge = 150;
-
-
-
-let gst = 
-
-(energyCharge + fixedCharge) * 0.18;
-
-
-
-let total =
-
-energyCharge +
-
-fixedCharge +
-
-gst;
-
-
-
-
-
-
-
-
-// ============================
-// DISPLAY VALUES
-// ============================
-
-
-
-document.getElementById("unitsConsumed")
-
-.innerText =
-
-units.toFixed(2)+" kWh";
-
-
-
-
-
-document.getElementById("unitRate")
-
-.innerText =
-
-"₹"+rate;
-
-
-
-
-
-
-document.getElementById("energyCharge")
-
-.innerText =
-
-"₹"+energyCharge.toFixed(2);
-
-
-
-
-
-
-document.getElementById("fixedCharge")
-
-.innerText =
-
-"₹"+fixedCharge.toFixed(2);
-
-
-
-
-
-
-document.getElementById("gstAmount")
-
-.innerText =
-
-"₹"+gst.toFixed(2);
-
-
-
-
-
-
-
-document.getElementById("summaryEnergyCharge")
-
-.innerText =
-
-"₹"+energyCharge.toFixed(2);
-
-
-
-
-
-document.getElementById("summaryFixedCharge")
-
-.innerText =
-
-"₹"+fixedCharge.toFixed(2);
-
-
-
-
-
-document.getElementById("summaryGST")
-
-.innerText =
-
-"₹"+gst.toFixed(2);
-
-
-
-
-
-
-document.getElementById("totalAmount")
-
-.innerText =
-
-"₹"+total.toFixed(2);
-
-
-
-
-
-
-
-
-// ============================
-// INVOICE DETAILS
-// ============================
-
-
-
-document.getElementById("invoiceDate")
-
-.innerText =
-
-new Date().toLocaleDateString();
-
-
-
-
-
-
-document.getElementById("billingMonth")
-
-.innerText =
-
-new Date().toLocaleString(
-
-"default",
-
-{
-
-month:"long",
-
-year:"numeric"
-
-}
-
-);
-
-
-
-
-
-
-
-document.getElementById("predictionDate")
-
-.innerText =
-
-new Date().toLocaleDateString();
-
-
-
-
-
-
-
-document.getElementById("customerName")
-
-.innerText =
-
-dashboardData.user_name || "Energy User";
-
-
-
-
-
-
-document.getElementById("accountId")
-
-.innerText =
-
-"SEA-" +
-
-Date.now().toString().slice(-6);
-
-
-
-
-
-
-
-}
-
-
-
-catch(error){
-
-
-
-console.error(
-
-"Bill Error:",
-
-error
-
-);
-
-
-
-
-document.getElementById("totalAmount")
-
-.innerText =
-
-"Unable to calculate";
-
-
-
-}
-
-finally{
-
-
-
-document.getElementById("loadingScreen")
-
-.style.display="none";
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
 
 // ============================
 // OPEN RECOMMENDATION PAGE
 // ============================
 
+function openRecommendations() {
 
-function openRecommendations(){
-
-
-window.location.href="recommendations.html";
-
+    window.location.href = "recommendations.html";
 
 }
 
-
-
-
-
-
+// ============================
 // START
+// ============================
 
+window.onload = function () {
 
-window.onload=function(){
+    loadBill();
 
-
-loadBill();
-
-
-}
-
-
+};
 
 </script>
-
-
-
-
-
 
 </body>
 

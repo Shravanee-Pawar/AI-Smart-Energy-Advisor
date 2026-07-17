@@ -226,7 +226,7 @@
 
                         <h2 class="text-3xl font-black mt-2">
 
-                            <span id="current-units">--</span>
+                            <span id="current-units">Loading...</span>
 
                             <span class="text-sm font-medium">kWh</span>
 
@@ -258,7 +258,7 @@
 
                         <h2 class="text-3xl font-black mt-2">
 
-                            <span id="predicted-units">--</span>
+                            <span id="predicted-units">Loading...</span>
 
                             <span class="text-sm font-medium">kWh</span>
 
@@ -290,7 +290,7 @@
 
                         <h2 class="text-3xl font-black mt-2">
 
-                            ₹<span id="predicted-bill">--</span>
+                            ₹<span id="predicted-bill">Loading...</span>
 
                         </h2>
 
@@ -351,7 +351,7 @@
 
                         <h2 class="text-3xl font-black mt-2">
 
-                            ₹<span id="monthly-saving">--</span>
+                            ₹<span id="monthly-saving">Loading...</span>
 
                         </h2>
 
@@ -383,7 +383,7 @@
 
                         <h2 class="text-3xl font-black mt-2">
 
-                            <span id="carbon-footprint">--</span>
+                            <span id="carbon-footprint">Loading...</span>
 
                             <span class="text-sm font-medium">
                                 lbs CO₂
@@ -407,6 +407,24 @@
                 </div>
 
             </div>
+
+<!-- Energy Usage Chart -->
+
+<div class="mt-12">
+
+    <h2 class="text-xl font-bold text-slate-800 mb-6">
+
+        Energy Consumption Overview
+
+    </h2>
+
+    <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm">
+
+        <canvas id="energyChart" height="100"></canvas>
+
+    </div>
+
+</div>
 
             <!-- Quick Actions -->
 
@@ -568,14 +586,62 @@ async function loadDashboard() {
 
     }
 
-    catch (err) {
+   catch (err) {
 
-        console.error(err);
+    console.error(err);
+
+    document.getElementById("current-units").textContent = "Error";
+
+    document.getElementById("predicted-bill").textContent = "Error";
+
+    document.getElementById("predicted-units").textContent = "Error";
+
+    document.getElementById("monthly-saving").textContent = "Error";
+
+    document.getElementById("carbon-footprint").textContent = "Error";
+
+    document.getElementById("energy-status").textContent =
+        "Unable to load dashboard";
+
+}
+
+}
+
+async function loadProfile() {
+
+    const token = localStorage.getItem("token");
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE}/api/profile/`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        if (!response.ok) {
+            return;
+        }
+
+        const profile = await response.json();
+
+        document.getElementById("user-name").textContent =
+            profile.name;
+
+    }
+
+    catch (error) {
+
+        console.log(error);
 
     }
 
 }
 
+loadProfile();
 loadDashboard();
 </script>
 

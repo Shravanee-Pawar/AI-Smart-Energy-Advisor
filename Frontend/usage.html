@@ -507,8 +507,64 @@
 
 </div>
 
+<!-- ===========================
+     Energy Usage History
+=========================== -->
+
+<div class="mt-10">
+
+    <h3 class="text-xl font-bold mb-5">
+        Energy Usage History
+    </h3>
+
+    <div class="overflow-x-auto rounded-2xl border border-slate-200">
+
+        <table class="min-w-full">
+
+            <thead class="bg-slate-100">
+
+                <tr>
+
+                    <th class="px-5 py-3 text-left">
+                        Month
+                    </th>
+
+                    <th class="px-5 py-3 text-left">
+                        Units
+                    </th>
+
+                    <th class="px-5 py-3 text-left">
+                        Bill
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="history-body">
+
+                <tr>
+
+                    <td colspan="3"
+                        class="text-center py-8 text-slate-400">
+
+                        Loading...
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
 </div>
 <script>
+
 const API_BASE = "http://127.0.0.1:8000";
 
 /* --------------------------
@@ -516,23 +572,24 @@ const API_BASE = "http://127.0.0.1:8000";
 ---------------------------*/
 async function loadUsage() {
 
+    const uid = localStorage.getItem("uid");
+
     try {
 
-        const response = await fetch(`${API_BASE}/api/energy/`);
+        const response = await fetch(
+            `${API_BASE}/api/energy/${uid}`
+        );
 
         if (!response.ok) return;
 
         const data = await response.json();
 
-        // If API returns an array
-        const usage = Array.isArray(data)
-            ? data[data.length - 1]
-            : data;
+        if (!data.length) return;
 
-        if (!usage) return;
+        const usage = data[data.length - 1];
 
         document.getElementById("units_consumed").value =
-            usage.units_consumed || "";
+            usage.units || "";
 
         document.getElementById("rate").value =
             usage.rate || "";
@@ -575,52 +632,155 @@ async function loadUsage() {
 }
 
 /* --------------------------
+   Load Energy History
+---------------------------*/
+async function loadHistory() {
+
+    const uid = localStorage.getItem("uid");
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE}/api/energy/${uid}`
+        );
+
+        if (!response.ok) return;
+
+        const data = await response.json();
+
+        const tbody = document.getElementById("history-body");
+
+        tbody.innerHTML = "";
+
+        if (data.length === 0) {
+
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="3"
+                        class="text-center py-8 text-slate-400">
+                        No records found
+                    </td>
+                </tr>
+            `;
+
+            return;
+
+        }
+
+        data.forEach(record => {
+
+            tbody.innerHTML += `
+
+                <tr class="border-t">
+
+                    <td class="px-5 py-3">
+                        ${record.month}
+                    </td>
+
+                    <td class="px-5 py-3">
+                        ${record.units} kWh
+                    </td>
+
+                    <td class="px-5 py-3">
+                        ₹${record.bill}
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
+
+    }
+
+    catch(error){
+
+        console.log(error);
+
+    }
+
+}
+
+/* --------------------------
    Save Usage
 ---------------------------*/
-
 document.getElementById("usageForm").addEventListener("submit", async function(e){
 
     e.preventDefault();
 
+    const uid = localStorage.getItem("uid");
+
+    const units = Number(
+        document.getElementById("units_consumed").value
+    );
+
+    const rate = Number(
+        document.getElementById("rate").value
+    );
+
     const payload = {
 
-        units_consumed: Number(document.getElementById("units_consumed").value),
+        uid: uid,
 
-        rate: Number(document.getElementById("rate").value),
+        month: new Date().toLocaleString(
+            "default",
+            { month: "long" }
+        ),
 
-        family_members: Number(document.getElementById("family_members").value),
+        units: units,
+
+        bill: units * rate,
+
+        rate: rate,
+
+        family_members: Number(
+            document.getElementById("family_members").value
+        ),
 
         house_type: document.getElementById("house_type").value,
 
-        ac_hours: Number(document.getElementById("ac_hours").value),
+        ac_hours: Number(
+            document.getElementById("ac_hours").value
+        ),
 
-        fan_hours: Number(document.getElementById("fan_hours").value),
+        fan_hours: Number(
+            document.getElementById("fan_hours").value
+        ),
 
-        tv_hours: Number(document.getElementById("tv_hours").value),
+        tv_hours: Number(
+            document.getElementById("tv_hours").value
+        ),
 
-        refrigerator: document.getElementById("refrigerator").checked,
+        refrigerator:
+            document.getElementById("refrigerator").checked,
 
-        washing_machine: document.getElementById("washing_machine").checked,
+        washing_machine:
+            document.getElementById("washing_machine").checked,
 
-        cooler: document.getElementById("cooler").checked,
+        cooler:
+            document.getElementById("cooler").checked,
 
-        other_appliances: document.getElementById("other_appliances").checked
+        other_appliances:
+            document.getElementById("other_appliances").checked
 
     };
 
     try {
 
-        const response = await fetch(`${API_BASE}/api/energy/`,{
+        const response = await fetch(
+            `${API_BASE}/api/energy/`,
+            {
 
-            method:"POST",
+                method: "POST",
 
-            headers:{
-                "Content-Type":"application/json"
-            },
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
-            body:JSON.stringify(payload)
+                body: JSON.stringify(payload)
 
-        });
+            }
+        );
 
         if(response.ok){
 
@@ -628,11 +788,15 @@ document.getElementById("usageForm").addEventListener("submit", async function(e
 
             loadUsage();
 
+            loadHistory();
+
         }
 
         else{
 
-            alert("Unable to save usage.");
+            const error = await response.json();
+
+            alert(error.detail || "Unable to save usage.");
 
         }
 
@@ -651,7 +815,6 @@ document.getElementById("usageForm").addEventListener("submit", async function(e
 /* --------------------------
    Reset Form
 ---------------------------*/
-
 document.getElementById("resetBtn").addEventListener("click",function(){
 
     if(confirm("Clear all entered values?")){
@@ -668,8 +831,9 @@ document.getElementById("resetBtn").addEventListener("click",function(){
 
 loadUsage();
 
-</script>
+loadHistory();
 
+</script>
 </body>
 
 </html>

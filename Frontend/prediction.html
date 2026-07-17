@@ -442,80 +442,261 @@
 
 const API_BASE = "http://127.0.0.1:8000";
 
+
 /* ------------------------------------
-   Load Prediction
+   Load Dynamic Prediction
 -------------------------------------*/
 
 async function loadPrediction() {
 
     try {
 
-        const payload = {
+        const uid = localStorage.getItem("uid");
 
-            Year: 2007,
-            Month: 8,
-            lag_1: 497.09,
-            lag_2: 595.35,
-            rolling_mean_3: 608.64
+        if (!uid) {
+
+            alert("User not logged in.");
+
+            return;
+
+        }
+
+
+        /*
+            Step 1:
+            Fetch user's energy history
+        */
+
+        const historyResponse = await fetch(
+            `${API_BASE}/api/energy/${uid}`
+        );
+
+
+        if (!historyResponse.ok) {
+
+            throw new Error("Unable to fetch energy history");
+
+        }
+
+
+        const history = await historyResponse.json();
+
+
+        if (history.length < 2) {
+
+            alert(
+                "At least two energy records are required for prediction."
+            );
+
+            return;
+
+        }
+
+
+        /*
+            Step 2:
+            Sort records by month order
+        */
+
+        const monthOrder = {
+
+            January:1,
+            February:2,
+            March:3,
+            April:4,
+            May:5,
+            June:6,
+            July:7,
+            August:8,
+            September:9,
+            October:10,
+            November:11,
+            December:12
 
         };
 
-        const response = await fetch(`${API_BASE}/api/prediction/`, {
 
-            method: "POST",
+        history.sort(
+            (a,b)=>
+            monthOrder[a.month] -
+            monthOrder[b.month]
+        );
 
-            headers: {
-                "Content-Type": "application/json"
-            },
 
-            body: JSON.stringify(payload)
+        /*
+            Step 3:
+            Calculate ML features
+        */
 
-        });
 
-        const data = await response.json();
+        const latest =
+            history[history.length - 1];
 
-        console.log(data);
 
-        // Prediction Results
+        const previous =
+            history[history.length - 2];
 
-        document.getElementById("predictedUnits").textContent =
+
+        const lastThree =
+            history.slice(-3);
+
+
+        const total =
+            lastThree.reduce(
+                (sum,item)=>
+                sum + item.units,
+                0
+            );
+
+
+        const rollingMean =
+            total / lastThree.length;
+
+
+
+        const today = new Date();
+
+
+        const payload = {
+
+            Year: today.getFullYear(),
+
+            Month: today.getMonth() + 2,
+
+            lag_1: latest.units,
+
+            lag_2: previous.units,
+
+            rolling_mean_3:
+                Number(rollingMean.toFixed(2))
+
+        };
+
+
+        console.log(
+            "Prediction Payload:",
+            payload
+        );
+
+
+        /*
+            Step 4:
+            Send prediction request
+        */
+
+
+        const response = await fetch(
+            `${API_BASE}/api/prediction/`,
+            {
+
+                method:"POST",
+
+                headers:{
+
+                    "Content-Type":"application/json"
+
+                },
+
+                body:JSON.stringify(payload)
+
+            }
+        );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "Prediction API failed"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+
+        /*
+            Step 5:
+            Display Prediction Result
+        */
+
+
+        document.getElementById(
+            "predictedUnits"
+        ).textContent =
             data.predicted_units;
 
-        document.getElementById("predictedBill").textContent =
+
+
+        document.getElementById(
+            "predictedBill"
+        ).textContent =
             data.predicted_bill;
 
-        // Confidence
 
-        document.getElementById("confidence").textContent =
+
+        document.getElementById(
+            "confidence"
+        ).textContent =
             "95%";
 
-        // Input Features
 
-        document.getElementById("featureYear").textContent =
+
+        /*
+            Step 6:
+            Display Features
+        */
+
+
+        document.getElementById(
+            "featureYear"
+        ).textContent =
             payload.Year;
 
-        document.getElementById("featureMonth").textContent =
+
+
+        document.getElementById(
+            "featureMonth"
+        ).textContent =
             payload.Month;
 
-        document.getElementById("featureLag1").textContent =
+
+
+        document.getElementById(
+            "featureLag1"
+        ).textContent =
             payload.lag_1;
 
-        document.getElementById("featureRolling").textContent =
+
+
+        document.getElementById(
+            "featureRolling"
+        ).textContent =
             payload.rolling_mean_3;
+
 
     }
 
-    catch (error) {
+
+    catch(error){
 
         console.error(error);
 
-        alert("Unable to load prediction.");
+        alert(
+            "Unable to load prediction."
+        );
 
     }
 
+
 }
 
+
+
 loadPrediction();
+
 
 </script>
 

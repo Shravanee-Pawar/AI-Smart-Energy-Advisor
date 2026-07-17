@@ -12,12 +12,24 @@ def save_energy(request: EnergyRequest) -> EnergyResponse:
 
     # Data to store
     data = {
-        "uid": request.uid,
-        "month": request.month,
-        "units": request.units,
-        "bill": request.bill
-    }
+    "uid": request.uid,
+    "month": request.month,
+    "units": request.units,
+    "bill": request.bill,
 
+    "rate": request.rate,
+    "family_members": request.family_members,
+    "house_type": request.house_type,
+
+    "ac_hours": request.ac_hours,
+    "fan_hours": request.fan_hours,
+    "tv_hours": request.tv_hours,
+
+    "refrigerator": request.refrigerator,
+    "washing_machine": request.washing_machine,
+    "cooler": request.cooler,
+    "other_appliances": request.other_appliances
+}
     # Save data
     doc_ref.set(data)
 

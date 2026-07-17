@@ -937,13 +937,6 @@ Update Password
 
 </div>
 
-
-
-
-
-
-
-
 <script>
 
 
@@ -968,119 +961,43 @@ const USER_ID = localStorage.getItem("uid") || "demo-user";
 // ============================
 
 
-async function loadProfile(){
+async function loadProfile() {
 
+    const token = localStorage.getItem("token");
 
-try{
+    try {
 
+        const response = await fetch(
+            `${API_URL}/api/profile/`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
 
-const response = await fetch(
+        if (!response.ok) {
+            throw new Error("Unable to load profile");
+        }
 
-`${API_URL}/api/profile/${USER_ID}`
+        const data = await response.json();
 
-);
+        document.getElementById("profile-name").innerText = data.name;
+        document.getElementById("profile-email").innerText = data.email;
 
+        document.getElementById("name").value = data.name;
+        document.getElementById("email").value = data.email;
 
+        document.getElementById("profile-avatar").innerText =
+            data.name.charAt(0).toUpperCase();
 
-const data = await response.json();
+        document.getElementById("created-date").innerText = "Recently";
 
-
-
-
-
-
-
-document.getElementById("profile-name").innerText =
-
-data.name || "Energy User";
-
-
-
-
-
-document.getElementById("profile-email").innerText =
-
-data.email || "user@email.com";
-
-
-
-
-
-document.getElementById("name").value =
-
-data.name || "";
-
-
-
-
-
-document.getElementById("email").value =
-
-data.email || "";
-
-
-
-
-
-
-
-document.getElementById("profile-avatar").innerText =
-
-(data.name || "U")
-
-.charAt(0)
-
-.toUpperCase();
-
-
-
-
-
-
-
-document.getElementById("created-date").innerText =
-
-data.created_at ?
-
-data.created_at.substring(0,10)
-
-:
-
-"Recently";
-
-
-
-
-
+    }
+    catch (err) {
+        console.log(err);
+    }
 }
-
-
-
-catch(error){
-
-
-console.error(
-
-"Profile loading error:",
-
-error
-
-);
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
 
 // ============================
 // UPDATE PROFILE
@@ -1100,28 +1017,13 @@ async function(e){
 e.preventDefault();
 
 
-
-
-
-const payload={
-
-
-name:
-
-document.getElementById("name").value,
-
-
-email:
-
-document.getElementById("email").value
-
-
-
+const payload = {
+    name: document.getElementById("name").value,
+    phone: "",
+    address: "",
+    household_size: 1,
+    tariff: "Residential"
 };
-
-
-
-
 
 
 try{
@@ -1388,34 +1290,17 @@ input.type="password";
 button.innerHTML =
 
 '<i class="fa-solid fa-eye"></i>';
-
-
-
 }
-
-
-
 }
-
-
-
-
-
-
-
 
 
 function showPasswordError(message){
-
-
 
 const box=document.getElementById(
 
 "password-error"
 
 );
-
-
 
 document.getElementById(
 
@@ -1425,19 +1310,9 @@ document.getElementById(
 
 .innerText=message;
 
-
-
 box.classList.remove("hidden");
 
-
 }
-
-
-
-
-
-
-
 
 window.onload=function(){
 
@@ -1447,14 +1322,7 @@ loadProfile();
 
 };
 
-
-
 </script>
-
-
-
-
-
 
 </body>
 

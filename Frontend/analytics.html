@@ -320,371 +320,484 @@ Showing demonstration analytics.
 
 <script>
 
-const API="http://127.0.0.1:8000";
+const API = "http://127.0.0.1:8000";
 
-async function loadAnalytics(){
+async function loadAnalytics() {
 
-try{
+    try {
 
-const response=await fetch(`${API}/api/dashboard/`);
+        // ---------------------------------
+        // STEP 1 : Get Logged-in User
+        // ---------------------------------
 
-const data=await response.json();
+        const uid = localStorage.getItem("uid");
 
-const months=[
-"Jan","Feb","Mar","Apr",
-"May","Jun","Jul","Aug",
-"Sep","Oct","Nov","Dec"
-];
+        if (!uid) {
+            throw new Error("User not logged in.");
+        }
 
-let consumption=[
-180,
-200,
-210,
-250,
-260,
-280,
-300,
-290,
-310,
-330,
-340,
-data.latest_consumption
-];
+        // ---------------------------------
+        // STEP 2 : Dashboard Data
+        // ---------------------------------
 
-let bills=consumption.map(x=>x*8);
+        const dashboardResponse = await fetch(
+            `${API}/api/dashboard/?uid=${uid}`
+        );
 
-let prediction=[
-data.latest_consumption,
-data.latest_consumption+20,
-data.latest_consumption+35,
-data.latest_consumption+50
-];
+        if (!dashboardResponse.ok) {
+            throw new Error("Dashboard API failed");
+        }
 
-createConsumption(months,consumption);
+        const dashboardData =
+            await dashboardResponse.json();
 
-createBills(months,bills);
+        // ---------------------------------
+        // STEP 3 : Energy History
+        // ---------------------------------
 
-createPie();
+        const historyResponse = await fetch(
+            `${API}/api/energy/${uid}`
+        );
 
-createPrediction(prediction);
+        if (!historyResponse.ok) {
+            throw new Error("Energy history API failed");
+        }
 
-createWeekly(data.latest_consumption);
+        const history =
+            await historyResponse.json();
 
-}catch(err){
+        if (history.length === 0) {
+            throw new Error("No energy records found.");
+        }
 
-console.log(err);
+        // ---------------------------------
+        // STEP 4 : Sort Months
+        // ---------------------------------
 
-document.getElementById("sampleWarning").classList.remove("hidden");
+        const monthOrder = {
 
-createSampleCharts();
+            January:1,
+            February:2,
+            March:3,
+            April:4,
+            May:5,
+            June:6,
+            July:7,
+            August:8,
+            September:9,
+            October:10,
+            November:11,
+            December:12
+
+        };
+
+        history.sort(
+            (a,b)=>
+            monthOrder[a.month]-
+            monthOrder[b.month]
+        );
+
+        // ---------------------------------
+        // STEP 5 : Build Chart Data
+        // ---------------------------------
+
+        const months =
+            history.map(item=>item.month);
+
+        const consumption =
+            history.map(item=>item.units);
+
+        const bills =
+            history.map(item=>item.bill);
+
+        // ---------------------------------
+        // STEP 6 : Prediction Trend
+        // ---------------------------------
+
+        let prediction = [];
+
+        if(history.length >= 2){
+
+            const latest =
+                history[history.length-1];
+
+            const previous =
+                history[history.length-2];
+
+            const lastThree =
+                history.slice(-3);
+
+            const rollingMean =
+                lastThree.reduce(
+                    (sum,item)=>sum+item.units,
+                    0
+                ) / lastThree.length;
+
+            const today =
+                new Date();
+
+            const payload={
+
+                Year:
+                    today.getFullYear(),
+
+                Month:
+                    today.getMonth()+2,
+
+                lag_1:
+                    latest.units,
+
+                lag_2:
+                    previous.units,
+
+                rolling_mean_3:
+                    Number(
+                        rollingMean.toFixed(2)
+                    )
+
+            };
+
+            console.log(
+                "Prediction Payload:",
+                payload
+            );
+
+            const predictionResponse =
+                await fetch(
+                    `${API}/api/prediction/`,
+                    {
+
+                        method:"POST",
+
+                        headers:{
+                            "Content-Type":"application/json"
+                        },
+
+                        body:JSON.stringify(payload)
+
+                    }
+                );
+
+            if(predictionResponse.ok){
+
+                const predictionData =
+                    await predictionResponse.json();
+
+                prediction = [
+
+                    latest.units,
+
+                    Number(
+                        predictionData.predicted_units.toFixed(2)
+                    )
+
+                ];
+
+            }
+
+        }
+
+        // ---------------------------------
+        // STEP 7 : Draw Charts
+        // ---------------------------------
+
+        createConsumption(
+            months,
+            consumption
+        );
+
+        createBills(
+            months,
+            bills
+        );
+
+        createPie();
+
+        if(prediction.length>0){
+
+            createPrediction(
+                prediction
+            );
+
+        }
+
+        createWeekly(
+            dashboardData.latest_consumption
+        );
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        document
+        .getElementById("sampleWarning")
+        .classList.remove("hidden");
+
+        createSampleCharts();
+
+    }
 
 }
 
-}
 function createConsumption(labels,data){
 
-new Chart(document.getElementById("consumptionChart"),{
+    new Chart(
+        document.getElementById("consumptionChart"),
+        {
 
-type:"line",
+            type:"line",
 
-data:{
+            data:{
 
-labels:labels,
+                labels:labels,
 
-datasets:[{
+                datasets:[{
 
-label:"kWh",
+                    label:"Units (kWh)",
 
-data:data,
+                    data:data,
 
-borderColor:"#10b981",
+                    borderColor:"#10b981",
 
-backgroundColor:"rgba(16,185,129,.15)",
+                    backgroundColor:"rgba(16,185,129,.15)",
 
-fill:true,
+                    fill:true,
 
-tension:.4
+                    tension:.4
 
-}]
+                }]
 
-},
+            },
 
-options:{
+            options:{
 
-responsive:true,
+                responsive:true,
 
-maintainAspectRatio:false
+                maintainAspectRatio:false
 
-}
+            }
 
-});
+        }
+    );
 
 }
 
 function createBills(labels,data){
 
-new Chart(document.getElementById("billChart"),{
+    new Chart(
+        document.getElementById("billChart"),
+        {
 
-type:"bar",
+            type:"bar",
 
-data:{
+            data:{
 
-labels:labels,
+                labels:labels,
 
-datasets:[{
+                datasets:[{
 
-label:"₹",
+                    label:"Bill (₹)",
 
-data:data,
+                    data:data,
 
-backgroundColor:"#3b82f6"
+                    backgroundColor:"#3b82f6"
 
-}]
+                }]
 
-},
+            },
 
-options:{
+            options:{
 
-responsive:true,
+                responsive:true,
 
-maintainAspectRatio:false
+                maintainAspectRatio:false
 
-}
+            }
 
-});
+        }
+    );
 
 }
 
 function createPie(){
 
-new Chart(document.getElementById("applianceChart"),{
+    new Chart(
+        document.getElementById("applianceChart"),
+        {
 
-type:"doughnut",
+            type:"doughnut",
 
-data:{
+            data:{
 
-labels:[
+                labels:[
+                    "AC",
+                    "Fans",
+                    "Refrigerator",
+                    "TV",
+                    "Others"
+                ],
 
-"AC",
+                datasets:[{
 
-"Fans",
+                    data:[40,20,15,10,15],
 
-"Refrigerator",
+                    backgroundColor:[
+                        "#10b981",
+                        "#3b82f6",
+                        "#f59e0b",
+                        "#8b5cf6",
+                        "#ef4444"
+                    ]
 
-"TV",
+                }]
 
-"Others"
+            },
 
-],
+            options:{
 
-datasets:[{
+                responsive:true,
 
-data:[40,20,15,10,15],
+                maintainAspectRatio:false
 
-backgroundColor:[
+            }
 
-"#10b981",
-
-"#3b82f6",
-
-"#f59e0b",
-
-"#8b5cf6",
-
-"#ef4444"
-
-]
-
-}]
-
-},
-
-options:{
-
-responsive:true,
-
-maintainAspectRatio:false
-
-}
-
-});
+        }
+    );
 
 }
 
 function createPrediction(data){
 
-new Chart(document.getElementById("predictionTrendChart"),{
+    new Chart(
+        document.getElementById("predictionTrendChart"),
+        {
 
-type:"line",
+            type:"line",
 
-data:{
+            data:{
 
-labels:[
+                labels:[
+                    "Current",
+                    "Predicted"
+                ],
 
-"Current",
+                datasets:[{
 
-"Next Month",
+                    label:"Forecast",
 
-"+2 Months",
+                    data:data,
 
-"+3 Months"
+                    borderColor:"#8b5cf6",
 
-],
+                    backgroundColor:"rgba(139,92,246,.15)",
 
-datasets:[{
+                    fill:true,
 
-label:"Forecast",
+                    tension:.4
 
-data:data,
+                }]
 
-borderColor:"#8b5cf6",
+            },
 
-backgroundColor:"rgba(139,92,246,.15)",
+            options:{
 
-fill:true,
+                responsive:true,
 
-tension:.4
+                maintainAspectRatio:false
 
-}]
+            }
 
-},
-
-options:{
-
-responsive:true,
-
-maintainAspectRatio:false
-
-}
-
-});
+        }
+    );
 
 }
 
 function createWeekly(latest){
 
-const avg=(latest/7).toFixed(1);
+    const avg = latest/7;
 
-new Chart(document.getElementById("weeklyLoadChart"),{
+    new Chart(
+        document.getElementById("weeklyLoadChart"),
+        {
 
-type:"bar",
+            type:"bar",
 
-data:{
+            data:{
 
-labels:[
+                labels:[
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu",
+                    "Fri",
+                    "Sat",
+                    "Sun"
+                ],
 
-"Mon",
+                datasets:[{
 
-"Tue",
+                    label:"kWh",
 
-"Wed",
+                    data:[
 
-"Thu",
+                        avg,
+                        avg*1.05,
+                        avg*0.95,
+                        avg*1.02,
+                        avg*1.08,
+                        avg*1.15,
+                        avg*0.90
 
-"Fri",
+                    ],
 
-"Sat",
+                    backgroundColor:"#10b981"
 
-"Sun"
+                }]
 
-],
+            },
 
-datasets:[{
+            options:{
 
-label:"kWh",
+                responsive:true,
 
-data:[
+                maintainAspectRatio:false
 
-avg,
+            }
 
-avg*1.05,
-
-avg*.95,
-
-avg*1.02,
-
-avg*1.08,
-
-avg*1.15,
-
-avg*.90
-
-],
-
-backgroundColor:"#10b981"
-
-}]
-
-},
-
-options:{
-
-responsive:true,
-
-maintainAspectRatio:false
-
-}
-
-});
+        }
+    );
 
 }
 
 function createSampleCharts(){
 
-const months=[
+    createConsumption(
+        ["No Data"],
+        [0]
+    );
 
-"Jan","Feb","Mar","Apr",
+    createBills(
+        ["No Data"],
+        [0]
+    );
 
-"May","Jun","Jul","Aug",
+    createPie();
 
-"Sep","Oct","Nov","Dec"
+    createPrediction(
+        [0,0]
+    );
 
-];
-
-const sample=[
-
-180,
-
-210,
-
-220,
-
-250,
-
-270,
-
-260,
-
-300,
-
-320,
-
-310,
-
-330,
-
-340,
-
-360
-
-];
-
-createConsumption(months,sample);
-
-createBills(months,sample.map(x=>x*8));
-
-createPie();
-
-createPrediction([360,375,390,405]);
-
-createWeekly(360);
+    createWeekly(
+        0
+    );
 
 }
 
 loadAnalytics();
 
 </script>
-
 </body>
 
 </html>

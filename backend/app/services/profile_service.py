@@ -7,7 +7,18 @@ def get_profile(uid: str):
     if not doc.exists:
         return None
 
-    return doc.to_dict()
+    profile = doc.to_dict()
+
+    # Default values for older user documents
+    profile.setdefault("uid", uid)
+    profile.setdefault("name", "")
+    profile.setdefault("email", "")
+    profile.setdefault("phone", "")
+    profile.setdefault("address", "")
+    profile.setdefault("household_size", 1)
+    profile.setdefault("tariff", "Residential")
+
+    return profile
 
 
 def update_profile(uid: str, profile_data: dict):
@@ -15,4 +26,14 @@ def update_profile(uid: str, profile_data: dict):
 
     updated_doc = db.collection("users").document(uid).get()
 
-    return updated_doc.to_dict()
+    profile = updated_doc.to_dict()
+
+    profile.setdefault("uid", uid)
+    profile.setdefault("name", "")
+    profile.setdefault("email", "")
+    profile.setdefault("phone", "")
+    profile.setdefault("address", "")
+    profile.setdefault("household_size", 1)
+    profile.setdefault("tariff", "Residential")
+
+    return profile
